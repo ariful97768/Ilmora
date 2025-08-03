@@ -28,11 +28,13 @@ export function LoginForm({
           <div>
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
-                <form action={async () => {
+                <form
+                  action={async () => {
                     "use server";
 
                     await signIn("facebook");
-                  }}>
+                  }}
+                >
                   <Button variant="outline" className="w-full">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -70,13 +72,20 @@ export function LoginForm({
                   Or continue with
                 </span>
               </div>
-              <div className="grid gap-6">
+              <form
+                action={async (formdata) => {
+                  "use server";
+                  await signIn("credentials", formdata);
+                }}
+                className="grid gap-6"
+              >
                 <div className="grid gap-3">
                   <Label htmlFor="email">Email</Label>
                   <Input
                     id="email"
                     type="email"
-                    placeholder="m@example.com"
+                    name="email"
+                    placeholder="email@example.com"
                     required
                   />
                 </div>
@@ -90,12 +99,17 @@ export function LoginForm({
                       Forgot your password?
                     </a>
                   </div>
-                  <Input id="password" type="password" required />
+                  <Input
+                    id="password"
+                    type="password"
+                    name="password"
+                    required
+                  />
                 </div>
                 <Button type="submit" className="w-full">
                   Login
                 </Button>
-              </div>
+              </form>
               <div className="text-center text-sm">
                 Don&apos;t have an account?{" "}
                 <a href="#" className="underline underline-offset-4">
