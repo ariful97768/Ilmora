@@ -11,7 +11,7 @@ const DashboardLayout = async ({ children }: { children: ReactNode }) => {
     <>
       <Navbar />
       <div className="flex">
-        <aside className="md:w-1/4 transform duration-500 border-r-4 px-3 h-screen">
+        <aside className="md:w-1/4 md:block hidden transform duration-500 border-r-4 px-3 h-screen">
           <Sidebar />
         </aside>
         <main className="px-5 bg-gray-100 w-full">
