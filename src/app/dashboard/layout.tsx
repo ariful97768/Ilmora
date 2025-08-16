@@ -9,15 +9,19 @@ const DashboardLayout = async ({ children }: { children: ReactNode }) => {
   if (!session?.user) redirect("/login");
   return (
     <>
-      <Navbar />
-      <div className="flex">
-        <aside className="md:w-1/4 md:block hidden transform duration-500 border-r-4 px-3 h-screen">
+      <main className="flex">
+        <aside className="md:w-1/4 sticky top-0 md:block hidden transform duration-500 border-r-4 px-3 h-screen">
           <Sidebar />
         </aside>
-        <main className="px-5 bg-gray-100 w-full">
-          <div>{children}</div>
-        </main>
-      </div>
+        <div className="w-full">
+          <Navbar />
+          <div className="flex">
+            <main className="px-5 bg-gray-100 w-full">
+              <div>{children}</div>
+            </main>
+          </div>
+        </div>
+      </main>
     </>
   );
 };

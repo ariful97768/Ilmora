@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 const Navbar = async () => {
   const session = await auth();
   return (
-    <nav className="border py-3 px-2 flex justify-end">
+    <nav className="border bg-white py-3 sticky top-0 z-50 px-2 flex justify-end">
       {session?.user ? (
         <div className="flex gap-3 items-center">
           <span className="font-bold">Username </span> {session.user.name}

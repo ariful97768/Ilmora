@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 import { HiDotsHorizontal } from "react-icons/hi";
 
 export default async function Parents() {
@@ -9,8 +10,13 @@ export default async function Parents() {
   return (
     <div className="grid grid-cols-4 gap-5">
       {count.map((item) => (
-        <div key={item} className="flex bg-white p-5 rounded-md space-y-5 text-center flex-col items-center relative">
-            <div className="absolute bg-indigo-200 hover:bg-indigo-300 transition-colors duration-300 cursor-pointer font-black text-xl top-5 right-5 p-2 border rounded-md"><HiDotsHorizontal /></div>
+        <div
+          key={item}
+          className="flex bg-white p-5 rounded-md space-y-5 text-center flex-col items-center relative"
+        >
+          <div className="absolute bg-indigo-200 hover:bg-indigo-300 transition-colors duration-300 cursor-pointer font-black text-xl top-5 right-5 p-2 border rounded-md">
+            <HiDotsHorizontal />
+          </div>
           <Image
             className="rounded-full border-6 border-white"
             width={100}
@@ -34,7 +40,9 @@ export default async function Parents() {
             </div>
           </div>
           <div className="flex gap-5">
-            <Button variant={"outline"}>Profile</Button>
+            <Link href={`teachers/${item}`}>
+              <Button variant={"outline"}>Profile</Button>
+            </Link>
             <Button>Chat</Button>
           </div>
         </div>

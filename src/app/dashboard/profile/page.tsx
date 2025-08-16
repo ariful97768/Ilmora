@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import Messages from "@/components/messages";
+import { Session } from "next-auth";
 import Image from "next/image";
 import { FaRegUser } from "react-icons/fa";
 import { FiPhone } from "react-icons/fi";
@@ -7,11 +8,11 @@ import { MdOutlineMail } from "react-icons/md";
 import { SlLocationPin } from "react-icons/sl";
 
 const Profile = async () => {
-  const session = await auth();
+  const session: Session | null = await auth();
   return (
-    <div className="mx-auto pb-10 relative flex flex-col mt-10">
+    <div className="mx-auto py-10 relative flex flex-col">
       <Image
-        className="rounded-full absolute border-6 border-white top-20 left-7 z-10"
+        className="rounded-full absolute border-6 border-white top-30 left-7 z-10"
         width={130}
         height={130}
         src={session?.user?.image ?? "/default-profile.png"}
