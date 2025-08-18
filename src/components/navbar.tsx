@@ -1,5 +1,6 @@
 import { auth, signOut } from "@/auth";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 const Navbar = async () => {
   const session = await auth();
@@ -19,7 +20,7 @@ const Navbar = async () => {
         </div>
       ) : (
         <Button variant={"link"}>
-          <a href="/login">Login</a>
+          <Link href="/login">Login</Link>
         </Button>
       )}
     </nav>

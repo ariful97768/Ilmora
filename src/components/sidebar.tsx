@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Sidebar = () => {
   return (
     <div>
@@ -5,18 +7,16 @@ const Sidebar = () => {
         <span>{"Student"}</span> Dashboard
       </h1>
       <div className="flex mt-5 flex-col  gap-2">
-        <a className="hover:underline" href="/dashboard/profile">
-          Profile
-        </a>
-        <a className="hover:underline" href="/dashboard/classes">
+        <Link className="hover:underline" href="/dashboard/profile">Profile</Link>
+        <Link className="hover:underline" href="/dashboard/classes">
           Classes
-        </a>
-        <a className="hover:underline" href="/dashboard/teachers">
+        </Link>
+        <Link className="hover:underline" href="/dashboard/teachers">
           Teachers
-        </a>
-        <a className="hover:underline" href="/dashboard/parents">
+        </Link>
+        <Link className="hover:underline" href="/dashboard/parents">
           Parents
-        </a>
+        </Link>
       </div>
     </div>
   );
