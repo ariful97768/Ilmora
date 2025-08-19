@@ -116,6 +116,23 @@ export default async function TeacherDetails({
               </div>
             </div>
           </div>
+          <div className="space-y-4 mb-7">
+            <h4 className="text-lg font-semibold">Education</h4>
+            <ul className="pl-5">
+              <li className="list-disc">
+                <p className="font-semibold text-sm">
+                  History Major, Oxford University
+                </p>
+                <span className="text-xs text-gray-800">2013-2017</span>
+              </li>
+              <li className="list-disc">
+                <p className="font-semibold text-sm">
+                  History Major, Oxford University
+                </p>
+                <span className="text-xs text-gray-800">2013-2017</span>
+              </li>
+            </ul>
+          </div>
         </div>
         {/* Blogs section */}
         <div className="md:w-1/3 space-y-7 mt-7">
