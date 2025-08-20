@@ -13,11 +13,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         email: { label: "Email", name: "email", type: "email" },
         password: {},
       },
-      async authorize(credentials): Promise<User | null> {
-        console.log(credentials?.email, "fssssssssss");
+      async authorize(): Promise<User | null> {
         return {
           name: "ariful",
-          image: "https://example.com/image.png",
+          image: "https://lh3.googleusercontent.com/a/ACg8ocK4LArs19HD4bbE_9ocQZs30q92nDI0IWHQCba2ZypUlCvX0fc=s96-c",
         };
       },
     }),
