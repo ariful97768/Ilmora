@@ -1,4 +1,4 @@
-import db from "@/app/database/setup";
+import db from "@/app/database/mongodb";
 import { BaseUser, DbResponseUser } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 
