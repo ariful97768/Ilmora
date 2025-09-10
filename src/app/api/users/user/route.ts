@@ -1,5 +1,5 @@
 import db from "@/app/database/mongodb";
-import { BaseUser, DbResponseUser } from "@/lib/types";
+import { CreateUserInput, UserResponse, InsertUserOnDB } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
   try {
     if (!email || !password) {
       return NextResponse.json(
-        { success: false, message: "Missing credentials." },
+        { success: false, message: "Missing credentials. Required: email, password" },
         { status: 400 }
       );
     }
@@ -39,8 +39,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    let data: BaseUser;
-
+    let data: CreateUserInput;
     try {
       data = await req.json();
     } catch (err) {
@@ -73,28 +72,26 @@ export async function POST(req: NextRequest) {
   }
 }
 
-interface NewUser extends BaseUser {
-  createdAt: string;
-  updatedAt: string;
-}
-
 // made separate functions for better reusability on other cases
 
-export async function createUser(data: BaseUser): Promise<DbResponseUser> {
+export async function createUser(data: CreateUserInput): Promise<UserResponse> {
   if (!data.name || !data.email || !data.password) {
-    throw new Error("Mission required fields.");
+    throw new Error("Missing required fields. Required: name, email, password.");
   }
+
   const isExist = await db.users.findOne({ email: data.email });
+  
   if (isExist) {
     throw new Error("User already exits.");
   }
 
-  const user: NewUser = {
+  const user: InsertUserOnDB = {
     name: data.name,
     email: data.email,
     password: data.password,
     image: data.image || null,
     role: data.role || "student",
+    isActive: true,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   };
@@ -110,7 +107,8 @@ export async function createUser(data: BaseUser): Promise<DbResponseUser> {
         email: user.email,
         role: user.role,
         image: user.image,
-        cratedAt: user.createdAt,
+        isActive: user.isActive,
+        createdAt: user.createdAt,
         updatedAt: user.updatedAt,
       },
     };
@@ -121,7 +119,7 @@ export async function createUser(data: BaseUser): Promise<DbResponseUser> {
 export async function verifySignin(credentials: {
   email: string;
   password: string;
-}): Promise<DbResponseUser> {
+}): Promise<UserResponse> {
   const userExist = await db.users.findOne({
     email: credentials.email,
   });
@@ -141,7 +139,8 @@ export async function verifySignin(credentials: {
       name: userExist.name,
       email: userExist.email,
       image: userExist.image,
-      cratedAt: userExist.createdAt,
+      isActive: userExist.isActive,
+      createdAt: userExist.createdAt,
       updatedAt: userExist.updatedAt,
     },
   };

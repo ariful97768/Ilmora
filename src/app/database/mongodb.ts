@@ -1,6 +1,5 @@
-// setup.ts
-import { BaseUser } from "@/lib/types";
-import { MongoClient, ServerApiVersion } from "mongodb";
+import { InsertStudentOnDB, InsertUserOnDB } from "@/lib/types";
+import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
 
 const uri = process.env.MONGODB_URI;
 if (!uri) {
@@ -30,6 +29,9 @@ export const database = (async () => {
 
 const db = {
   users: (await database).collection<User>("Users"),
+  students: (await database).collection<Student>("Students"),
+  faculties: (await database).collection("Faculties"),
+  admins: (await database).collection("Admins"),
   enrollments: (await database).collection("Enrollments"),
   courses: (await database).collection("Courses"),
   departments: (await database).collection("Departments"),
@@ -38,8 +40,11 @@ const db = {
 
 export default db;
 
-type User = BaseUser & {
-  _id?: string;
-  createdAt: string
-  updatedAt: string
+// types for database collection
+type Student = InsertStudentOnDB & {
+  readonly _id?: ObjectId;
+};
+
+type User = InsertUserOnDB & {
+  readonly _id?: ObjectId;
 };
