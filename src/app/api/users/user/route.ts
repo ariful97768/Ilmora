@@ -10,7 +10,10 @@ export async function GET(req: NextRequest) {
   try {
     if (!email || !password) {
       return NextResponse.json(
-        { success: false, message: "Missing credentials. Required: email, password" },
+        {
+          success: false,
+          message: "Missing credentials. Required: email, password",
+        },
         { status: 400 }
       );
     }
@@ -75,26 +78,47 @@ export async function POST(req: NextRequest) {
 // made separate functions for better reusability on other cases
 
 export async function createUser(data: CreateUserInput): Promise<UserResponse> {
-  if (!data.name || !data.email || !data.password) {
-    throw new Error("Missing required fields. Required: name, email, password.");
+  if (!data.name || !data.email) {
+    throw new Error(
+      "Missing required fields. Required: name, email, password."
+    );
+  }
+  if (data.provider === "credentials" && !data.password) {
+    throw new Error("Password is missing for credentials log in.");
   }
 
   const isExist = await db.users.findOne({ email: data.email });
-  
+
   if (isExist) {
     throw new Error("User already exits.");
   }
 
-  const user: InsertUserOnDB = {
-    name: data.name,
-    email: data.email,
-    password: data.password,
-    image: data.image || null,
-    role: data.role || "student",
-    isActive: true,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  };
+  let user: InsertUserOnDB;
+  if (data.provider === "credentials") {
+    user = {
+      name: data.name,
+      email: data.email,
+      image: data.image || null,
+      role: data.role || "student",
+      provider: data.provider,
+      password: data.password,
+      isActive: true,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+  } else {
+    user = {
+      name: data.name,
+      email: data.email,
+      image: data.image || null,
+      role: data.role || "student",
+      provider: data.provider,
+      isActive: true,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+  }
+
   const result = await db.users.insertOne(user);
 
   if (result.acknowledged) {
@@ -107,6 +131,7 @@ export async function createUser(data: CreateUserInput): Promise<UserResponse> {
         email: user.email,
         role: user.role,
         image: user.image,
+        provider: user.provider,
         isActive: user.isActive,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
@@ -125,10 +150,12 @@ export async function verifySignin(credentials: {
   });
 
   if (!userExist) throw new Error("User does not exist.");
-
-  console.log(userExist.password, credentials.password);
-  if (userExist.password !== credentials.password)
+  if (
+    userExist.provider === "credentials" &&
+    userExist.password !== credentials.password
+  ) {
     throw new Error("Wrong password.");
+  }
 
   return {
     success: true,
@@ -139,6 +166,7 @@ export async function verifySignin(credentials: {
       name: userExist.name,
       email: userExist.email,
       image: userExist.image,
+      provider: userExist.provider,
       isActive: userExist.isActive,
       createdAt: userExist.createdAt,
       updatedAt: userExist.updatedAt,
