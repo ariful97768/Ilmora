@@ -84,7 +84,7 @@ export async function createUser(data: CreateUserInput): Promise<UserResponse> {
     );
   }
   if (data.provider === "credentials" && !data.password) {
-    throw new Error("Password is missing for credentials log in.");
+    throw new Error("Password is missing for credentials sign in.");
   }
 
   const isExist = await db.users.findOne({ email: data.email });
@@ -143,13 +143,18 @@ export async function createUser(data: CreateUserInput): Promise<UserResponse> {
 
 export async function verifySignin(credentials: {
   email: string;
-  password: string;
+  password?: string;
 }): Promise<UserResponse> {
   const userExist = await db.users.findOne({
     email: credentials.email,
   });
 
   if (!userExist) throw new Error("User does not exist.");
+
+  if (userExist.provider === "credentials" && !credentials.password) {
+    throw new Error("Password required for verification.");
+  }
+
   if (
     userExist.provider === "credentials" &&
     userExist.password !== credentials.password
@@ -159,7 +164,7 @@ export async function verifySignin(credentials: {
 
   return {
     success: true,
-    message: "Signed in successfully.",
+    message: "User verification successful.",
     data: {
       id: userExist._id.toString(),
       role: userExist.role,

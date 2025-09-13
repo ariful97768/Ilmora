@@ -3,6 +3,8 @@ import Credentials from "next-auth/providers/credentials";
 import Facebook from "next-auth/providers/facebook";
 import Google from "next-auth/providers/google";
 import { createUser, verifySignin } from "./app/api/users/user/route";
+import db from "./app/database/mongodb";
+import { InsertUserOnDB } from "./lib/types";
 
 declare module "next-auth" {
   interface Session {
@@ -14,6 +16,7 @@ declare module "next-auth" {
   interface User {
     id?: string;
     role?: string;
+    createdAt?: string;
   }
 }
 
@@ -41,6 +44,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               password: credentials.password as string,
               role: "student",
               image: null,
+              provider: "credentials",
             });
 
             return {
@@ -70,16 +74,75 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   callbacks: {
+    async signIn({ user, account, profile }) {
+      if (account?.provider !== "credentials") {
+        const email = user.email || profile?.email;
+        if (!email) {
+          throw new Error(
+            "No email found from the provider. Please ty using a new method."
+          );
+        }
+
+        const existingUser = await db.users.findOne({ email });
+        if (existingUser) {
+          console.log(existingUser);
+          user.id = existingUser._id.toString();
+          user.name = existingUser.name;
+          user.email = existingUser.email;
+          user.image = existingUser.image;
+          user.role = existingUser.role;
+          user.createdAt = existingUser.createdAt;
+          return true;
+        }
+
+        if (
+          account?.provider === "google" ||
+          account?.provider === "facebook"
+        ) {
+          const newUser: InsertUserOnDB = {
+            email: email,
+            name: user.name || profile?.name || "Not provided",
+            image: user.image || profile?.picture,
+            role: "student",
+            isActive: true,
+            provider: account?.provider,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          };
+
+          const userData = (await createUser(newUser)).data;
+          console.log("userdata;", userData);
+
+          user.id = userData.id;
+          user.name = userData.name;
+          user.email = userData.email;
+          user.image = userData.image;
+          user.role = userData.role;
+          user.createdAt = userData.createdAt;
+        }
+      }
+      return true;
+    },
     async jwt({ token, user }) {
       if (user && user) {
-        token.role = user.role;
         token.id = user.id;
+        token.name = user.name;
+        token.email = user.email;
+        token.image = user.image;
+        token.role = user.role;
+        token.createdAt = user.createdAt;
       }
       return token;
     },
     async session({ session, token }) {
-      if (token) session.user.role = token.role as string;
-      if (token) session.user.id = token.id as string;
+      if (token) {
+        session.user.id = token.id as string;
+        session.user.name = token.name as string;
+        session.user.email = token.email as string;
+        session.user.image = token.image as string;
+        session.user.role = token.role as string;
+        session.user.createdAt = token.createdAt as string;
+      }
 
       return session;
     },
