@@ -2,9 +2,10 @@ import NextAuth, { type User, type DefaultSession } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Facebook from "next-auth/providers/facebook";
 import Google from "next-auth/providers/google";
-import { createUser, verifySignin } from "./app/api/users/user/route";
 import db from "./app/database/mongodb";
 import { InsertUserOnDB } from "./lib/types";
+import createUser from "./lib/backend-actions/create-user";
+import verifySignin from "./lib/backend-actions/verify-signin";
 
 declare module "next-auth" {
   interface Session {
@@ -42,7 +43,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               name: credentials.name as string,
               email: credentials.email as string,
               password: credentials.password as string,
-              role: "student",
+              role: "user",
               image: null,
               provider: "credentials",
             });
@@ -85,7 +86,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         const existingUser = await db.users.findOne({ email });
         if (existingUser) {
-          console.log(existingUser);
           user.id = existingUser._id.toString();
           user.name = existingUser.name;
           user.email = existingUser.email;
@@ -103,7 +103,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             email: email,
             name: user.name || profile?.name || "Not provided",
             image: user.image || profile?.picture,
-            role: "student",
+            role: "user",
             isActive: true,
             provider: account?.provider,
             createdAt: new Date().toISOString(),
@@ -111,7 +111,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           };
 
           const userData = (await createUser(newUser)).data;
-          console.log("userdata;", userData);
 
           user.id = userData.id;
           user.name = userData.name;
