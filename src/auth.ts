@@ -2,7 +2,7 @@ import NextAuth, { type User, type DefaultSession } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Facebook from "next-auth/providers/facebook";
 import Google from "next-auth/providers/google";
-import db from "./app/database/mongodb";
+import db from "./database/mongodb";
 import { InsertUserOnDB } from "./lib/types";
 import createUser from "./lib/backend-actions/create-user";
 import verifySignin from "./lib/backend-actions/verify-signin";
@@ -16,7 +16,7 @@ declare module "next-auth" {
   }
   interface User {
     id?: string;
-    role?: string;
+    role?: "user" | "faculty" | "admin" | "student";
     createdAt?: string;
   }
 }
@@ -54,6 +54,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               email: user.data.email,
               image: user.data.image,
               role: user.data.role,
+              createdAt: new Date().toISOString(),
             };
           }
           const user = await verifySignin({
@@ -66,6 +67,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             email: user.data.email,
             image: user.data.image,
             role: user.data.role,
+            createdAt: new Date().toISOString(),
           };
         } catch (err) {
           console.error("Error in authorize:", err);
@@ -80,7 +82,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const email = user.email || profile?.email;
         if (!email) {
           throw new Error(
-            "No email found from the provider. Please ty using a new method."
+            "No email found from the provider. Please try using a new method."
           );
         }
 
@@ -92,20 +94,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           user.image = existingUser.image;
           user.role = existingUser.role;
           user.createdAt = existingUser.createdAt;
-          return true;
-        }
-
-        if (
+        } else if (
           account?.provider === "google" ||
           account?.provider === "facebook"
         ) {
           const newUser: InsertUserOnDB = {
-            email: email,
+            email,
             name: user.name || profile?.name || "Not provided",
             image: user.image || profile?.picture,
             role: "user",
             isActive: true,
-            provider: account?.provider,
+            provider: account.provider,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
           };
@@ -123,13 +122,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return true;
     },
     async jwt({ token, user }) {
-      if (user && user) {
+      if (user) {
         token.id = user.id;
         token.name = user.name;
         token.email = user.email;
         token.image = user.image;
         token.role = user.role;
         token.createdAt = user.createdAt;
+      } else if (token.email) {
+        console.log("role check query made");
+        const existingUser = await db.users.findOne({ email: token.email });
+        if (existingUser) {
+          token.role = existingUser.role;
+        }
       }
       return token;
     },
@@ -139,7 +144,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.name = token.name as string;
         session.user.email = token.email as string;
         session.user.image = token.image as string;
-        session.user.role = token.role as string;
+        session.user.role = token.role as
+          | "user"
+          | "faculty"
+          | "admin"
+          | "student";
         session.user.createdAt = token.createdAt as string;
       }
 
