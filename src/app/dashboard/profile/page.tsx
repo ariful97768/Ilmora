@@ -2,10 +2,10 @@ import { auth } from "@/auth";
 import Messages from "@/components/messages";
 import { Session } from "next-auth";
 import Image from "next/image";
-import { FaRegUser } from "react-icons/fa";
-import { FiPhone } from "react-icons/fi";
-import { MdOutlineMail } from "react-icons/md";
-import { SlLocationPin } from "react-icons/sl";
+import { FaWpforms } from "react-icons/fa";
+import { MdOutlineCalendarMonth, MdOutlineMail } from "react-icons/md";
+import { TbUserShield } from "react-icons/tb";
+import defaultImage from "@/assets/no-img-avatar.png";
 
 const Profile = async () => {
   const session: Session | null = await auth();
@@ -15,7 +15,7 @@ const Profile = async () => {
         className="rounded-full absolute border-6 border-white top-30 left-7 z-10"
         width={130}
         height={130}
-        src={session?.user?.image ?? "/default-profile.png"}
+        src={session?.user?.image ?? defaultImage}
         alt="Profile"
       />
       <div className="bg-indigo-600 rounded-t-md px-10 pt-8">
@@ -51,39 +51,40 @@ const Profile = async () => {
       <div className="rounded-t-md space-y-5 bg-white px-7 pt-16 pb-7 rounded-b-md">
         <div className="mt-6">
           <h3 className="text-2xl font-bold">{session?.user?.name}</h3>
-          <p className="text-sm">Admin</p>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="flex items-center gap-2 ">
             <span className="bg-[#FB7D5B] text-white p-3 rounded-full">
-              <FaRegUser size={24} />
+              <FaWpforms size={24} />
             </span>
             <div>
-              <span className="text-sm text-gray-600">Parents:</span>
+              <span className="text-sm text-gray-600">Application:</span>
               <h3 className="font-semibold leading-5 text-gray-900">
-                Justin Hope
+                Approved
               </h3>
             </div>
           </div>
           <div className="flex items-center gap-2 ">
             <span className="bg-[#FB7D5B] text-white p-3 rounded-full">
-              <SlLocationPin size={24} />
+              <MdOutlineCalendarMonth size={24} />
             </span>
             <div>
-              <span className="text-sm text-gray-600">Address:</span>
+              <span className="text-sm text-gray-600">Registered at:</span>
               <h3 className="font-semibold leading-5 text-gray-900">
-                Jakarta, Indonesia
+                {session?.user?.createdAt
+                  ? new Date(session?.user?.createdAt).toLocaleDateString()
+                  : "Not provided"}
               </h3>
             </div>
           </div>
           <div className="flex items-center gap-2 ">
             <span className="bg-[#FB7D5B] text-white p-3 rounded-full">
-              <FiPhone size={24} />
+              <TbUserShield size={24} />
             </span>
             <div>
-              <span className="text-sm text-gray-600">Phone:</span>
+              <span className="text-sm text-gray-600">Role:</span>
               <h3 className="font-semibold leading-5 text-gray-900">
-                +12 345 6789 0
+                {session?.user.role?.slice(0)}
               </h3>
             </div>
           </div>
