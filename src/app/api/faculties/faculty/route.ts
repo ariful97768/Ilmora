@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
-    const allUser = searchParams.get("all-user");
+    const allFaculty = searchParams.get("all-faculty");
     const facultyId = searchParams.get("faculty-id");
     const reqUserEmail = searchParams.get("req-user");
 
@@ -40,7 +40,7 @@ export async function GET(req: NextRequest) {
     }
 
     // if api includes all user true and is admin then send all data
-    if (allUser === "true") {
+    if (allFaculty === "true") {
       if (validUser.role !== "admin") {
         return NextResponse.json(
           {
@@ -100,10 +100,27 @@ export async function GET(req: NextRequest) {
   }
 }
 
+// Create new faculty if faculty data is not available. if available then update with new data and update user role
 export async function POST(req: NextRequest) {
   try {
-    const data: Faculty = await req.json();
+    const { searchParams } = new URL(req.url);
+    const reqUserEmail = searchParams.get("req-user");
 
+    const isAdmin = await db.admins.findOne({
+      email: reqUserEmail,
+      isActive: true,
+    });
+    if (!isAdmin) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Your are not authorize to perform this action.",
+        },
+        { status: 403 }
+      );
+    }
+
+    const data: Faculty = await req.json();
     const reqFields: (keyof Faculty)[] = [
       "userId",
       "phone",
@@ -117,7 +134,7 @@ export async function POST(req: NextRequest) {
     ];
 
     const missingFields = reqFields.filter((item) => !data[item]);
-    console.log(data);
+
     if (missingFields.length > 0) {
       return NextResponse.json(
         {
@@ -173,7 +190,7 @@ export async function POST(req: NextRequest) {
         ),
         db.users.updateOne(
           { _id: new ObjectId(data.userId) },
-          { $set: { role: "faculty", updatedAt:new Date().toISOString() } }
+          { $set: { role: "faculty", updatedAt: new Date().toISOString() } }
         ),
       ]);
       return NextResponse.json({ success: true, result }, { status: 201 });
