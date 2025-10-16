@@ -1,4 +1,4 @@
-import db from "@/app/database/mongodb";
+import db from "@/database/mongodb";
 import { Faculty } from "@/lib/types";
 import { ObjectId } from "mongodb";
 import { NextRequest, NextResponse } from "next/server";
@@ -98,9 +98,6 @@ export async function GET(req: NextRequest) {
       }
     );
   }
-
-  // const u= await db.users.find().toArray()
-  // return NextResponse.json({u})
 }
 
 export async function POST(req: NextRequest) {
@@ -147,7 +144,18 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-    if (faculty) {
+
+    if (!user.isActive) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "User account is inactive.",
+        },
+        { status: 403 }
+      );
+    }
+
+    if (user.role === "faculty" && faculty) {
       return NextResponse.json(
         {
           success: false,
@@ -156,7 +164,36 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
+
+    if (user.role !== "faculty" && faculty) {
+      const [result] = await Promise.all([
+        db.faculties.updateOne(
+          { userId: data.userId },
+          { $set: { ...data, updatedAt: new Date().toISOString() } }
+        ),
+        db.users.updateOne(
+          { _id: new ObjectId(data.userId) },
+          { $set: { role: "faculty", updatedAt:new Date().toISOString() } }
+        ),
+      ]);
+      return NextResponse.json({ success: true, result }, { status: 201 });
+    }
+
     const result = await db.faculties.insertOne(data);
+    if (!result.insertedId) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Failed to create faculty account.",
+        },
+        { status: 400 }
+      );
+    }
+    await db.users.updateOne(
+      { _id: new ObjectId(data.userId) },
+      { $set: { role: "faculty" } }
+    );
+
     return NextResponse.json({ success: true, result }, { status: 201 });
   } catch (error: unknown) {
     const message =
