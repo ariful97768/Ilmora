@@ -1,4 +1,9 @@
-import { InsertStudentOnDB, InsertUserOnDB } from "@/lib/types";
+import {
+  Department,
+  Faculty,
+  InsertStudentOnDB,
+  InsertUserOnDB,
+} from "@/lib/types";
 import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
 
 const uri = process.env.MONGODB_URI;
@@ -30,11 +35,11 @@ export const database = (async () => {
 const db = {
   users: (await database).collection<User>("Users"),
   students: (await database).collection<Student>("Students"),
-  faculties: (await database).collection("Faculties"),
+  faculties: (await database).collection<Faculty>("Faculties"),
   admins: (await database).collection("Admins"),
   enrollments: (await database).collection("Enrollments"),
   courses: (await database).collection("Courses"),
-  departments: (await database).collection("Departments"),
+  departments: (await database).collection<Department>("Departments"),
   assignments: (await database).collection("Assignments"),
 };
 

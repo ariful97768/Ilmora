@@ -1,4 +1,4 @@
-import db from "@/app/database/mongodb";
+import db from "@/database/mongodb";
 import { StudentResponse } from "../types";
 import { ObjectId } from "mongodb";
 
