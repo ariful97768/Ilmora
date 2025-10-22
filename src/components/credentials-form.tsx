@@ -4,7 +4,7 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useFormStatus } from "react-dom";
-import { authenticate } from "@/lib/actions/auth-action";
+import { authenticate } from "@/lib/frontend-actions/auth-action";
 import { useActionState } from "react";
 
 export default function CredentialsForm() {
