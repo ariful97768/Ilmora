@@ -377,6 +377,117 @@ export default function Home() {
             </div>
           </div>
         </section>
+        <section className="bg-white text-black py-20">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-center justify-between">
+              <div className="max-w-4xl space-y-5">
+                <h1 className="font-bold text-4xl">EVENTS</h1>
+                <p className="text-[#223043] tracking-wide leading-5.5">
+                  Concerts, lectures, sports events, and more
+                </p>
+              </div>
+              <button className="rounded-full hover:cursor-pointer border-[#0B2344]/60 text-[#223043] py-2 px-4 border-2">
+                See more events
+              </button>
+            </div>
+            <div className="max-w-7xl py-10 mx-auto flex flex-col">
+              <div className="flex py-5 items-center border-b-3 w-full gap-40">
+                <span className="font-bold text-xl min-w-36">
+                  SATURDAY 10 <br /> MAY
+                </span>
+                <div className="space-y-2 max-w-3xl">
+                  <h1 className="font-bold text-lg">Libraries</h1>
+                  <p className="text-[#223043] leading-5.5">
+                    Ilmora is home to some of the most prestigious libraries in
+                    the world, offering students access to vast collections of
+                    resources for research and study. Thee iconic University
+                    Library, along with numerous departmental and college
+                    libraries, provides an enriching environment for academic
+                    pursuits.
+                  </p>
+                  <Link
+                    href={"#"}
+                    className="underline group text-sm flex items-center gap-2"
+                  >
+                    Learn more
+                    <span className="-mb-1 group-hover:-translate-x-1 duration-300">
+                      <IoIosArrowForward />
+                    </span>
+                  </Link>
+                </div>
+              </div>
+              <div className="flex py-5 items-center border-b-3 w-full gap-40">
+                <span className="font-bold text-xl min-w-36">
+                  SATURDAY 10 <br /> MAY
+                </span>
+                <div className="space-y-2 max-w-3xl">
+                  <h1 className="font-bold text-lg">Museums</h1>
+                  <p className="text-[#223043] leading-5.5">
+                    The University boasts a number of renowned museums; such as
+                    the Fitzwiliwam Museum and the Museum of Archeology and
+                    Anthropology. These institutions offer students unique
+                    opportunities to engage with history, art, and culture, all
+                    within walking distance of the campus.
+                  </p>
+                  <Link
+                    href={"#"}
+                    className="underline group text-sm flex items-center gap-2"
+                  >
+                    Learn more
+                    <span className="-mb-1 group-hover:-translate-x-1 duration-300">
+                      <IoIosArrowForward />
+                    </span>
+                  </Link>
+                </div>
+              </div>
+              <div className="flex py-5 items-center border-b-3 w-full gap-40">
+                <span className="font-bold text-xl min-w-36">
+                  SUNDAY 11 <br /> MAY
+                </span>
+                <div className="space-y-2 max-w-3xl">
+                  <h1 className="font-bold text-lg">
+                    Here is a Gale Warning: Art, Crisis & Survival
+                  </h1>
+                  <p className="text-[#223043] leading-5.5">
+                    This exhibition presents eight contemporary artists whose
+                    works offer vantage points on a world in perpetual crisis.
+                  </p>
+                  <Link
+                    href={"#"}
+                    className="underline group text-sm flex items-center gap-2"
+                  >
+                    Learn more
+                    <span className="-mb-1 group-hover:-translate-x-1 duration-300">
+                      <IoIosArrowForward />
+                    </span>
+                  </Link>
+                </div>
+              </div>
+              <div className="flex py-5 items-center border-b-3 w-full gap-40">
+                <span className="font-bold text-xl min-w-36">
+                  JULY 2025 <br /> JANUARY 2026
+                </span>
+                <div className="space-y-2 max-w-3xl">
+                  <h1 className="font-bold text-lg">Admissions - AIM PhD</h1>
+                  <p className="text-[#223043] leading-5.5">
+                    Are you considering a PhD at Ilmora starting in 2026? Join
+                    AIM; PhD to revieve 6 months of support preparing your PhD
+                    application, Apply by 18 may to join the programme.
+                  </p>
+                  <Link
+                    href={"#"}
+                    className="underline group text-sm flex items-center gap-2"
+                  >
+                    Learn more
+                    <span className="-mb-1 group-hover:-translate-x-1 duration-300">
+                      <IoIosArrowForward />
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
     </>
   );
