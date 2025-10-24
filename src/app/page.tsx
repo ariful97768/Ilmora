@@ -1,5 +1,341 @@
- export default function Home() {
-  return  
-     
-   
+import Image from "next/image";
+import logo from "@/assets/logo-white.png";
+import Link from "next/link";
+import { IoIosArrowForward } from "react-icons/io";
+import bannerImg from "@/assets/hero-bg.jpg";
+import libraryImg from "@/assets/library.jpg";
+import statueImg from "@/assets/statue.jpg";
+import researchImg from "@/assets/research.jpg";
+import degreeImg from "@/assets/degree.avif";
+
+export default function Home() {
+  return (
+    <>
+      <header className="max-w-7xl pt-3 text-white flex items-center justify-between mx-auto">
+        <Link href={"#"} className="w-35 h-auto">
+          <Image src={logo} alt="logo" />
+        </Link>
+        <Link href={"/login"} className="text-lg hover:underline font-bold">
+          Login
+        </Link>
+      </header>
+      <main className="text-white mx-auto">
+        <section className="max-w-[1536px] mx-auto py-20 pt-16 relative z-10">
+          <div className="max-w-[1050px] mx-auto space-y-3 pb-14">
+            <div className="text-[56px] font-bold tracking-wide -space-y-1">
+              <div className="w-full flex justify-start">
+                <h1>UNIVERSITY OF ILMORA</h1>
+              </div>
+              <div className="w-full flex justify-end">
+                <h1>A TRADITION OF EXCELLENCE</h1>
+              </div>
+            </div>
+            <p className="text-[#e7e8ee] text-center">
+              A respected institution on research, teaching, <br /> and making a
+              positive impact globally
+            </p>
+          </div>
+          <div className="flex gap-5 max-w-4xl mx-auto">
+            <div className="space-y-3">
+              <h1 className="text-2xl font-semibold">Undergraduate Programs</h1>
+              <p className="text-[#d4d7e4] leading-5.5">
+                At Ilmora, undergraduates thrive in a dynamic academic
+                environment. With access to expert faculty, state-of-the-art
+                facilities, and a diverse community, students are equipped to
+                excel. through challenging coursework and research, they develop
+                critical thinking and creativity, preparing for successful
+                careers.
+              </p>
+              <Link
+                href={"#"}
+                className="underline group flex items-center gap-2"
+              >
+                Learn more
+                <span className="-mb-1 group-hover:-translate-x-1 duration-300">
+                  <IoIosArrowForward />
+                </span>
+              </Link>
+            </div>
+            <div className="space-y-3">
+              <h1 className="text-2xl font-semibold">Postgraduate Programs</h1>
+              <p className="text-[#d4d7e4] leading-5.5">
+                Postgraduate students at Ilmora engage in cutting-edge research,
+                working with top experts and resources. they deepen their
+                knowledge, contribute to innovative advancements, and prepare
+                for leadership roles in academia and industry. Ilmora provides a
+                collaborative environment for intellectual growth and global
+                impact.
+              </p>
+              <Link
+                href={"#"}
+                className="underline group flex items-center gap-2"
+              >
+                Learn more
+                <span className="-mb-1 group-hover:-translate-x-1 duration-300">
+                  <IoIosArrowForward />
+                </span>
+              </Link>
+            </div>
+          </div>
+        </section>
+        <section className="w-full relative h-150">
+          <Image
+            src={bannerImg}
+            fill
+            className="object-cover object-center"
+            alt="image"
+          />
+        </section>
+        <section className="bg-white text-black py-20">
+          <div className="max-w-7xl mx-auto">
+            <div className="max-w-4xl space-y-5">
+              <h1 className="font-bold text-4xl">CAMPUS</h1>
+              <p className="text-[#223043] tracking-wide leading-5.5">
+                The University of Ilmora combines rich history with modern
+                amenities, offering a dynamic environment for learning,
+                research, and personal growth.
+                {/* <br /> */}
+                With world-class facilities, historic buildings, and beautiful
+                green spaces, the campus provides an inspiring setting for
+                academic and personal development.
+              </p>
+            </div>
+            <div className="max-w-7xl py-10 mx-auto flex flex-col items-center">
+              <div className="flex py-5 items-center border-b-3 w-full justify-center gap-40">
+                <span className="font-bold text-lg">01</span>
+                <div className="space-y-2 max-w-3xl">
+                  <h1 className="font-bold text-lg">Libraries</h1>
+                  <p className="text-[#223043] leading-5.5">
+                    Ilmora is home to some of the most prestigious libraries in
+                    the world, offering students access to vast collections of
+                    resources for research and study. Thee iconic University
+                    Library, along with numerous departmental and college
+                    libraries, provides an enriching environment for academic
+                    pursuits.
+                  </p>
+                  <Link
+                    href={"#"}
+                    className="underline group text-sm flex items-center gap-2"
+                  >
+                    Learn more
+                    <span className="-mb-1 group-hover:-translate-x-1 duration-300">
+                      <IoIosArrowForward />
+                    </span>
+                  </Link>
+                </div>
+              </div>
+              <div className="flex py-5 items-center border-b-3 w-full justify-center gap-40">
+                <span className="font-bold text-lg">02</span>
+                <div className="space-y-2 max-w-3xl">
+                  <h1 className="font-bold text-lg">Museums</h1>
+                  <p className="text-[#223043] leading-5.5">
+                    The University boasts a number of renowned museums; such as
+                    the Fitzwiliwam Museum and the Museum of Archeology and
+                    Anthropology. These institutions offer students unique
+                    opportunities to engage with history, art, and culture, all
+                    within walking distance of the campus.
+                  </p>
+                  <Link
+                    href={"#"}
+                    className="underline group text-sm flex items-center gap-2"
+                  >
+                    Learn more
+                    <span className="-mb-1 group-hover:-translate-x-1 duration-300">
+                      <IoIosArrowForward />
+                    </span>
+                  </Link>
+                </div>
+              </div>
+              <div className="flex py-5 items-center border-b-3 w-full justify-center gap-40">
+                <span className="font-bold text-lg">03</span>
+                <div className="space-y-2 max-w-3xl">
+                  <h1 className="font-bold text-lg">Green Spaces</h1>
+                  <p className="text-[#223043] leading-5.5">
+                    The campus features beautiful green spaces, including the
+                    Botanic Garden and various college gardens, providing
+                    sutdents with places to relax, reflect, or engage in outdoor
+                    activities. These areas contribute to a balanced and healthy
+                    campus life.
+                  </p>
+                  <Link
+                    href={"#"}
+                    className="underline group text-sm flex items-center gap-2"
+                  >
+                    Learn more
+                    <span className="-mb-1 group-hover:-translate-x-1 duration-300">
+                      <IoIosArrowForward />
+                    </span>
+                  </Link>
+                </div>
+              </div>
+              <div className="flex py-5 items-center border-b-3 w-full justify-center gap-40">
+                <span className="font-bold text-lg">04</span>
+                <div className="space-y-2 max-w-3xl">
+                  <h1 className="font-bold text-lg">Sports and Recreation</h1>
+                  <p className="text-[#223043] leading-5.5">
+                    Ilmora offers a wide range of sporting facilities and clubs
+                    for students to stay active and pursue their interest. From
+                    rowing on the River Cam to football and tennis, there are
+                    numerous opportunities for students to engage in physical
+                    activities and social events.
+                  </p>
+                  <Link
+                    href={"#"}
+                    className="underline group text-sm flex items-center gap-2"
+                  >
+                    Learn more
+                    <span className="-mb-1 group-hover:-translate-x-1 duration-300">
+                      <IoIosArrowForward />
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="bg-white space-y-15 text-black pb-20">
+          <div className="flex max-w-7xl gap-30 mx-auto">
+            <h1 className="font-bold text-4xl shrink-0">STUDYING AT ILMORA</h1>
+            <p className="text-[#223043] tracking-wide leading-5.5">
+              Studying at Ilmoa mean being parts of a tradition of intellectual
+              curiosity and academic excellence. With access to world-class
+              research, personalized supervision, and a vibrant student life,
+              students are empowered to make meaningful contribution to their
+              fields and beyond.
+            </p>
+          </div>
+          <div className="flex gap-5 max-w-max mx-auto">
+            <div className="w-max group h-max overflow-hidden">
+              <div className="relative text-white group-hover:-translate-y-2 group-hover:scale-105 duration-300 group w-76 h-110">
+                <div className="absolute top-0 z-10 h-full w-full  group-hover:bg-gradient-to-b duration-600 from-[#0B2344]/0 to-[#0B2344]/30 "></div>
+                <Image
+                  src={libraryImg}
+                  fill
+                  className="object-cover"
+                  alt="women in a library"
+                />
+                <div className="absolute bottom-5 z-20">
+                  <div className="overflow-hidden mx-5">
+                    <div className="space-y-1 duration-600 translate-y-27 group-hover:-translate-y-0">
+                      <h3 className="font-semibold">Degree Programs</h3>
+                      <p className="leading-5 text-sm">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Illum quis explicabo rem alias totam vero, illo in
+                        obcaecati vitae minus.
+                      </p>
+                      <Link
+                        href={"#"}
+                        className="underline text-sm flex z-50 items-center gap-2"
+                      >
+                        Learn more
+                        <span className="-mb-1 group-hover:-translate-x-1 duration-300">
+                          <IoIosArrowForward />
+                        </span>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="w-max group h-max overflow-hidden">
+              <div className="relative text-white group-hover:-translate-y-2 group-hover:scale-105 duration-300 group w-76 h-110">
+                <div className="absolute top-0 z-10 h-full w-full  group-hover:bg-gradient-to-b duration-600 from-[#0B2344]/0 to-[#0B2344]/30 "></div>
+                <Image
+                  src={statueImg}
+                  fill
+                  className="object-cover "
+                  alt="women in a library"
+                />
+                <div className="absolute bottom-5 z-20">
+                  <div className="overflow-hidden mx-5">
+                    <div className="space-y-1 duration-600 translate-y-27 group-hover:-translate-y-0">
+                      <h3 className="font-semibold">Degree Programs</h3>
+                      <p className="leading-5 text-sm">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Illum quis explicabo rem alias totam vero, illo in
+                        obcaecati vitae minus.
+                      </p>
+                      <Link
+                        href={"#"}
+                        className="underline text-sm flex z-50 items-center gap-2"
+                      >
+                        Learn more
+                        <span className="-mb-1 group-hover:-translate-x-1 duration-300">
+                          <IoIosArrowForward />
+                        </span>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="w-max group h-max overflow-hidden">
+              <div className="relative text-white group-hover:-translate-y-2 group-hover:scale-105 duration-300 group w-76 h-110">
+                <div className="absolute top-0 z-10 h-full w-full  group-hover:bg-gradient-to-b duration-600 from-[#0B2344]/0 to-[#0B2344]/30 "></div>
+                <Image
+                  src={researchImg}
+                  fill
+                  className="object-cover "
+                  alt="women in a library"
+                />
+                <div className="absolute bottom-5 z-20">
+                  <div className="overflow-hidden mx-5">
+                    <div className="space-y-1 duration-600 translate-y-27 group-hover:-translate-y-0">
+                      <h3 className="font-semibold">Degree Programs</h3>
+                      <p className="leading-5 text-sm">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Illum quis explicabo rem alias totam vero, illo in
+                        obcaecati vitae minus.
+                      </p>
+                      <Link
+                        href={"#"}
+                        className="underline text-sm flex z-50 items-center gap-2"
+                      >
+                        Learn more
+                        <span className="-mb-1 group-hover:-translate-x-1 duration-300">
+                          <IoIosArrowForward />
+                        </span>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="w-max group h-max overflow-hidden">
+              <div className="relative text-white group-hover:-translate-y-2 group-hover:scale-105 duration-300 group w-76 h-110">
+                <div className="absolute top-0 z-10 h-full w-full  group-hover:bg-gradient-to-b duration-600 from-[#0B2344]/0 to-[#0B2344]/30 "></div>
+                <Image
+                  src={degreeImg}
+                  fill
+                  className="object-cover "
+                  alt="women in a library"
+                />
+                <div className="absolute bottom-5 z-20">
+                  <div className="overflow-hidden mx-5">
+                    <div className="space-y-1 duration-600 translate-y-27 group-hover:-translate-y-0">
+                      <h3 className="font-semibold">Degree Programs</h3>
+                      <p className="leading-5 text-sm">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Illum quis explicabo rem alias totam vero, illo in
+                        obcaecati vitae minus.
+                      </p>
+                      <Link
+                        href={"#"}
+                        className="underline text-sm flex z-50 items-center gap-2"
+                      >
+                        Learn more
+                        <span className="-mb-1 group-hover:-translate-x-1 duration-300">
+                          <IoIosArrowForward />
+                        </span>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </>
+  );
 }
