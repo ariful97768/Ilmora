@@ -7,6 +7,9 @@ import libraryImg from "@/assets/library.jpg";
 import statueImg from "@/assets/statue.jpg";
 import researchImg from "@/assets/research.jpg";
 import degreeImg from "@/assets/degree.avif";
+import person1 from "@/assets/person1.webp";
+import person2 from "@/assets/person2.jpeg";
+import person3 from "@/assets/rishisunak.jpg";
 
 export default function Home() {
   return (
@@ -217,7 +220,7 @@ export default function Home() {
                 <div className="absolute bottom-5 z-20">
                   <div className="overflow-hidden mx-5">
                     <div className="space-y-1 duration-600 translate-y-27 group-hover:-translate-y-0">
-                      <h3 className="font-semibold">Degree Programs</h3>
+                      <h3 className="font-semibold">World of Knowledge</h3>
                       <p className="leading-5 text-sm">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         Illum quis explicabo rem alias totam vero, illo in
@@ -249,7 +252,7 @@ export default function Home() {
                 <div className="absolute bottom-5 z-20">
                   <div className="overflow-hidden mx-5">
                     <div className="space-y-1 duration-600 translate-y-27 group-hover:-translate-y-0">
-                      <h3 className="font-semibold">Degree Programs</h3>
+                      <h3 className="font-semibold">Curriculum</h3>
                       <p className="leading-5 text-sm">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         Illum quis explicabo rem alias totam vero, illo in
@@ -281,7 +284,7 @@ export default function Home() {
                 <div className="absolute bottom-5 z-20">
                   <div className="overflow-hidden mx-5">
                     <div className="space-y-1 duration-600 translate-y-27 group-hover:-translate-y-0">
-                      <h3 className="font-semibold">Degree Programs</h3>
+                      <h3 className="font-semibold">Research Opportunities</h3>
                       <p className="leading-5 text-sm">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         Illum quis explicabo rem alias totam vero, illo in
@@ -332,6 +335,45 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div className="bg-white text-black">
+            <div className="max-w-7xl mx-auto">
+              <div className="max-w-2xl space-y-5 pt-10 pb-20 ">
+                <h1 className="font-bold text-4xl shrink-0">ALUMNI</h1>
+                <p className="text-[#223043] tracking-wide leading-5.5">
+                  The University on Ilmora has a long history of producing
+                  individuals who have shaped various fields, from science and
+                  politics to entertainment and social activism. Below are just
+                  a few of its many distinguished alumni.
+                </p>
+                <button className="rounded-full hover:cursor-pointer border-[#0B2344]/60 text-[#223043] py-2 px-4 border-2">
+                  See more famous alumni
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="flex py-14 gap-10 justify-center">
+            <div className="relative w-100 h-105">
+              <Image
+                src={person1}
+                fill
+                className="object-cover object-top"
+                alt="alumni"
+              />
+            </div>
+            <div className="relative w-100 h-105">
+              <Image src={person2} fill className="object-cover" alt="alumni" />
+            </div>
+            <div className="relative -mt-35 w-100 h-140">
+              <Image
+                src={person3}
+                fill
+                className="object-cover object-top"
+                alt="alumni"
+              />
             </div>
           </div>
         </section>
