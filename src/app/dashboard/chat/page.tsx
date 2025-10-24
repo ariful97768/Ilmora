@@ -399,8 +399,8 @@ export default function Chat() {
             <input
               className="outline-none py-2 w-full"
               type="text"
-              autoComplete='off'
-              spellCheck='true'
+              autoComplete="off"
+              spellCheck="true"
               placeholder="Type a message"
               name="message"
               id="message"

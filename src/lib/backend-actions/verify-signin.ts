@@ -1,4 +1,4 @@
-import db from "@/app/database/mongodb";
+import db from "@/database/mongodb";
 import { UserResponse } from "../types";
 
 export default async function verifySignin(credentials: {

@@ -1,6 +1,5 @@
-import type { Metadata } from "next"; 
+import type { Metadata } from "next";
 import "./globals.css";
- 
 
 export const metadata: Metadata = {
   title: "Ilmora",
@@ -13,8 +12,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" data-theme="light">
+      <body className="bg-[#0B2344]">{children}</body>
     </html>
   );
 }

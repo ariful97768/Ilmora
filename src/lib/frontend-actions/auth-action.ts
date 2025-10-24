@@ -14,12 +14,11 @@ export async function authenticate(
   formData: FormData
 ): Promise<AuthState> {
   try {
-    const res = await signIn("credentials", {
+    await signIn("credentials", {
       email: formData.get("email"),
       password: formData.get("password"),
       redirect: false,
     });
-    console.log(res);
     redirect("/dashboard/profile");
   } catch (err) {
     console.log("error from auth-action", err);
