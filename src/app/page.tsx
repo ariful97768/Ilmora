@@ -6,7 +6,7 @@ import bannerImg from "@/assets/hero-bg.jpg";
 import libraryImg from "@/assets/library.jpg";
 import statueImg from "@/assets/statue.jpg";
 import researchImg from "@/assets/research.jpg";
-import degreeImg from "@/assets/degree.avif";
+import degreeImg from "@/assets/degree.jpg";
 import person1 from "@/assets/person1.webp";
 import person2 from "@/assets/person2.jpeg";
 import person3 from "@/assets/rishisunak.jpg";
@@ -505,7 +505,7 @@ export default function Home() {
                 See more news
               </button>
             </div>
-            <div className="flex py-14 gap-10 justify-center">
+            <div className="flex pt-14 gap-10 justify-center">
               <div className="space-y-4">
                 <div className="relative w-100 h-100">
                   <Image
@@ -601,6 +601,101 @@ export default function Home() {
           </div>
         </section>
       </main>
+      <footer className="text-white pb-11 pt-20">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-4">
+            <div className="flex flex-col -translate-y-9 gap-2">
+              <div className="relative mb-3 -translate-x-2 w-34 h-13">
+                <Image src={logo} fill className="object-cover" alt="logo" />
+              </div>
+              <Link className=" text-[#d4d7e4]" href={"#"}>
+                Contact the University
+              </Link>
+              <Link className=" text-[#d4d7e4]" href={"#"}>
+                Accessibility statement
+              </Link>
+              <Link className=" text-[#d4d7e4]" href={"#"}>
+                Freedom on information
+              </Link>
+              <Link className=" text-[#d4d7e4]" href={"#"}>
+                Privacy policy and cookies
+              </Link>
+              <Link className=" text-[#d4d7e4]" href={"#"}>
+                Statement on Modern Slavery
+              </Link>
+              <Link className=" text-[#d4d7e4]" href={"#"}>
+                Terms and conditions
+              </Link>
+              <Link className=" text-[#d4d7e4]" href={"#"}>
+                University A-Z
+              </Link>
+            </div>
+            <div className="flex flex-col gap-2">
+              <h1 className="font-semibold mb-1 text-lg">Study at Ilmora</h1>
+              <Link className=" text-[#d4d7e4]" href={"#"}>
+                Undergraduate
+              </Link>
+              <Link className=" text-[#d4d7e4]" href={"#"}>
+                Postgraduate
+              </Link>
+              <Link className=" text-[#d4d7e4]" href={"#"}>
+                Continuing education
+              </Link>
+              <Link className=" text-[#d4d7e4]" href={"#"}>
+                Courses in education
+              </Link>
+              <Link className=" text-[#d4d7e4]" href={"#"}>
+                Executive and professional education
+              </Link>
+            </div>
+            <div className="flex flex-col gap-2">
+              <h1 className="font-semibold mb-1 text-lg">
+                About the University
+              </h1>
+              <Link className=" text-[#d4d7e4]" href={"#"}>
+                How the University and Colleges work
+              </Link>
+              <Link className=" text-[#d4d7e4]" href={"#"}>
+                Give to Ilmora
+              </Link>
+              <Link className=" text-[#d4d7e4]" href={"#"}>
+                Jobs
+              </Link>
+              <Link className=" text-[#d4d7e4]" href={"#"}>
+                Maps
+              </Link>
+              <Link className=" text-[#d4d7e4]" href={"#"}>
+                Visiting the University
+              </Link>
+              <Link className=" text-[#d4d7e4]" href={"#"}>
+                Ilmora University Press & Assessment
+              </Link>
+            </div>
+            <div className="flex flex-col gap-2">
+              <h1 className="font-semibold mb-1 text-lg">Research at Ilmora</h1>
+              <Link className=" text-[#d4d7e4]" href={"#"}>
+                Research news
+              </Link>
+              <Link className=" text-[#d4d7e4]" href={"#"}>
+                About research at Ilmora
+              </Link>
+              <Link className=" text-[#d4d7e4]" href={"#"}>
+                Public engagement
+              </Link>
+              <Link className=" text-[#d4d7e4]" href={"#"}>
+                Spotlight on Ilmora
+              </Link>
+            </div>
+          </div>
+          <div className="flex text-[#d4d7e4] items-center justify-between">
+            <div className="flex items-center gap-8">
+              <Link href={"#"}>Terms of Use</Link>
+              <Link href={"#"}>Privacy Policy</Link>
+            </div>
+            <div>@2025 University of Ilmora</div>
+          </div>
+        </div>
+      </footer>
     </>
   );
 }
