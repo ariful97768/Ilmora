@@ -3,7 +3,7 @@ import { getStudentData } from "@/lib/backend-actions/get-student-data";
 import { BaseStudent } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextResponse) {
+export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const id: string | null = searchParams.get("id");
