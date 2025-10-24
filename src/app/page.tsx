@@ -13,17 +13,28 @@ import person3 from "@/assets/rishisunak.jpg";
 import news1 from "@/assets/news1.webp";
 import news2 from "@/assets/news2.webp";
 import news3 from "@/assets/news3.webp";
+import { auth } from "@/auth";
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
   return (
     <>
       <header className="max-w-7xl pt-3 text-white flex items-center justify-between mx-auto">
         <Link href={"#"} className="w-35 h-auto">
           <Image src={logo} alt="logo" />
         </Link>
-        <Link href={"/login"} className="text-lg hover:underline font-bold">
-          Login
-        </Link>
+        {session && session.user ? (
+          <Link
+            href={"/dashboard/profile"}
+            className="text-lg hover:underline font-bold"
+          >
+            Dashboard
+          </Link>
+        ) : (
+          <Link href={"/login"} className="text-lg hover:underline font-bold">
+            Enroll
+          </Link>
+        )}
       </header>
       <main className="text-white mx-auto">
         <section className="max-w-[1536px] mx-auto py-20 pt-16 relative z-10">
