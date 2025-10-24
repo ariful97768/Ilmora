@@ -10,6 +10,9 @@ import degreeImg from "@/assets/degree.avif";
 import person1 from "@/assets/person1.webp";
 import person2 from "@/assets/person2.jpeg";
 import person3 from "@/assets/rishisunak.jpg";
+import news1 from "@/assets/news1.webp";
+import news2 from "@/assets/news2.webp";
+import news3 from "@/assets/news3.webp";
 
 export default function Home() {
   return (
@@ -477,6 +480,115 @@ export default function Home() {
                   <Link
                     href={"#"}
                     className="underline group text-sm flex items-center gap-2"
+                  >
+                    Learn more
+                    <span className="-mb-1 group-hover:-translate-x-1 duration-300">
+                      <IoIosArrowForward />
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="bg-white text-black pb-20">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-center justify-between">
+              <div className="max-w-4xl space-y-5">
+                <h1 className="font-bold text-4xl">NEWS</h1>
+                <p className="text-[#223043] tracking-wide leading-5.5">
+                  Official news from Ilmora University from across the
+                  University
+                </p>
+              </div>
+              <button className="rounded-full hover:cursor-pointer border-[#0B2344]/60 text-[#223043] py-2 px-4 border-2">
+                See more news
+              </button>
+            </div>
+            <div className="flex py-14 gap-10 justify-center">
+              <div className="space-y-4">
+                <div className="relative w-100 h-100">
+                  <Image
+                    src={news1}
+                    fill
+                    className="object-cover object-top"
+                    alt="news"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <h1 className="mb-3 text-xl font-semibold">
+                    Undergraduate Programs
+                  </h1>
+                  <p className="text-[#223043] text-sm tracking-wide leading-5.5">
+                    At Ilmora, undergraduates thrive in a dynamic academic
+                    environment. With access to expert faculty, state-of-the-art
+                    facilities, and a diverse community, students are equipped
+                    to excel. through challenging coursework and research, they
+                    develop critical thinking and creativity, preparing for
+                    successful careers.
+                  </p>
+                  <Link
+                    href={"#"}
+                    className="underline text-sm group flex items-center gap-2"
+                  >
+                    Learn more
+                    <span className="-mb-1 group-hover:-translate-x-1 duration-300">
+                      <IoIosArrowForward />
+                    </span>
+                  </Link>
+                </div>
+              </div>
+              <div className="space-y-4">
+                <div className="relative w-100 h-130">
+                  <Image src={news2} fill className="object-cover" alt="news" />
+                </div>
+                <div className="space-y-1">
+                  <h1 className="mb-3 text-xl font-semibold">
+                    Undergraduate Programs
+                  </h1>
+                  <p className="text-[#223043] text-sm tracking-wide leading-5.5">
+                    At Ilmora, undergraduates thrive in a dynamic academic
+                    environment. With access to expert faculty, state-of-the-art
+                    facilities, and a diverse community, students are equipped
+                    to excel. through challenging coursework and research, they
+                    develop critical thinking and creativity, preparing for
+                    successful careers.
+                  </p>
+                  <Link
+                    href={"#"}
+                    className="underline text-sm group flex items-center gap-2"
+                  >
+                    Learn more
+                    <span className="-mb-1 group-hover:-translate-x-1 duration-300">
+                      <IoIosArrowForward />
+                    </span>
+                  </Link>
+                </div>
+              </div>
+              <div className="space-y-4">
+                <div className="relative w-100 h-100">
+                  <Image
+                    src={news3}
+                    fill
+                    className="object-cover object-top"
+                    alt="news"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <h1 className="mb-3 text-xl font-semibold">
+                    Undergraduate Programs
+                  </h1>
+                  <p className="text-[#223043] text-sm tracking-wide leading-5.5">
+                    At Ilmora, undergraduates thrive in a dynamic academic
+                    environment. With access to expert faculty, state-of-the-art
+                    facilities, and a diverse community, students are equipped
+                    to excel. through challenging coursework and research, they
+                    develop critical thinking and creativity, preparing for
+                    successful careers.
+                  </p>
+                  <Link
+                    href={"#"}
+                    className="underline text-sm group flex items-center gap-2"
                   >
                     Learn more
                     <span className="-mb-1 group-hover:-translate-x-1 duration-300">
