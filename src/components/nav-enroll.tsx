@@ -1,7 +1,7 @@
 "use client";
 
-import { Link } from "lucide-react";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 export default function DynamicEnroll() {
   const session = useSession();
