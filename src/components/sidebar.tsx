@@ -13,7 +13,7 @@ import { HiSpeakerphone } from "react-icons/hi";
 import { useEffect, useState } from "react";
 
 const Sidebar = ({ session }: { session: Session }) => {
-  const [fullWidth, setFullWidth] = useState(false);
+  const [fullWidth, setFullWidth] = useState(true);
   useEffect(() => {
     setFullWidth(window.innerWidth > 768);
   }, []);
