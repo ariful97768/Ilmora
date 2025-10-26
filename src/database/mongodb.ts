@@ -36,10 +36,9 @@ const db = {
   users: (await database).collection<User>("Users"),
   students: (await database).collection<Student>("Students"),
   faculties: (await database).collection<Faculty>("Faculties"),
-  admins: (await database).collection("Admins"),
+  departments: (await database).collection<Department>("Departments"),
   enrollments: (await database).collection("Enrollments"),
   courses: (await database).collection("Courses"),
-  departments: (await database).collection<Department>("Departments"),
   assignments: (await database).collection("Assignments"),
 };
 
