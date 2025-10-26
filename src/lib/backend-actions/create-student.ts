@@ -1,16 +1,10 @@
 import db from "@/database/mongodb";
-import { BaseStudent, InsertStudentOnDB, StudentResponse } from "../types";
+import { InsertStudentOnDB, StudentInput, StudentResponse } from "../types";
 
 export async function createStudent(
-  data: Omit<
-    BaseStudent,
-    "rollNumber" | "registrationNumber" | "admissionDate" | "status"
-  >
+  data: StudentInput
 ): Promise<StudentResponse> {
-  const requiredFields: (keyof Omit<
-    BaseStudent,
-    "rollNumber" | "registrationNumber" | "admissionDate" | "status"
-  >)[] = [
+  const requiredFields: (keyof StudentInput)[] = [
     "userId",
     "address",
     "currentSemester",
@@ -54,6 +48,7 @@ export async function createStudent(
     department: data.department,
     guardianId: data.guardianId,
     admissionDate: new Date().toISOString(),
+    paymentStatus: "Unpaid",
     status: "Active",
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
@@ -80,6 +75,7 @@ export async function createStudent(
       department: data.department,
       guardianId: data.guardianId,
       admissionDate: new Date().toISOString(),
+      paymentStatus: "Unpaid",
       status: "Active",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
