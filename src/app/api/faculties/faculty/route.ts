@@ -105,10 +105,19 @@ export async function POST(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const reqUserEmail = searchParams.get("req-user");
-
-    const isAdmin = await db.admins.findOne({
+    if (!reqUserEmail) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Requested user's email is not provided",
+        },
+        { status: 403 }
+      );
+    }
+    const isAdmin = await db.users.findOne({
       email: reqUserEmail,
       isActive: true,
+      role: "admin",
     });
     if (!isAdmin) {
       return NextResponse.json(
