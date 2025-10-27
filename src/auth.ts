@@ -131,9 +131,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.createdAt = user.createdAt;
       } else if (token.email) {
         console.log("role check query made");
-        const existingUser = await db.users.findOne({ email: token.email });
-        if (existingUser) {
-          token.role = existingUser.role;
+        try {
+          const existingUser = await db.users.findOne(
+            { email: token.email },
+            { maxTimeMS: 3000 }
+          );
+          console.log("role check query completed");
+          if (existingUser) {
+            token.role = existingUser.role;
+          }
+        } catch (err) {
+          const message =
+            err instanceof Error
+              ? err.message
+              : "Unknown error happen while fetching user data";
+          console.log(message);
         }
       }
       return token;
