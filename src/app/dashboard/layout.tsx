@@ -10,10 +10,10 @@ const DashboardLayout = async ({ children }: { children: ReactNode }) => {
   return (
     <main className="flex">
       <Sidebar session={session} />
-      <div className="w-full">
+      <div className="w-full bg-gray-100">
         <Navbar />
         <div className="flex">
-          <main className="px-5 bg-gray-100 w-full">
+          <main className="px-5 w-full">
             <div>{children}</div>
           </main>
         </div>

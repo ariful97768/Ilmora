@@ -2,10 +2,11 @@ import { auth } from "@/auth";
 import Messages from "@/components/messages";
 import { Session } from "next-auth";
 import Image from "next/image";
-import { FaWpforms } from "react-icons/fa";
+import { FaPen, FaWpforms } from "react-icons/fa";
 import { MdOutlineCalendarMonth, MdOutlineMail } from "react-icons/md";
 import { TbUserShield } from "react-icons/tb";
 import defaultImage from "@/assets/no-img-avatar.png";
+import Link from "next/link";
 
 const Profile = async () => {
   const session: Session | null = await auth();
@@ -48,7 +49,10 @@ const Profile = async () => {
           </svg>
         </div>
       </div>
-      <div className="rounded-t-md space-y-5 bg-white px-7 pt-16 pb-7 rounded-b-md">
+      <div className="rounded-t-md relative space-y-5 bg-white px-7 pt-16 pb-7 rounded-b-md">
+        <Link href={'/dashboard/profile/edit'}>
+        <FaPen size={16} className="absolute top-7 right-7" /></Link>
+
         <div className="mt-6">
           <h3 className="text-2xl font-bold">{session?.user?.name}</h3>
         </div>
