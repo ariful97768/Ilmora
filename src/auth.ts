@@ -121,7 +121,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return true;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         token.id = user.id;
         token.name = user.name;
@@ -147,6 +147,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               : "Unknown error happen while fetching user data";
           console.log(message);
         }
+      }
+
+      if (trigger === "update" && session) {
+        token = { ...token, ...session.user };
       }
       return token;
     },
