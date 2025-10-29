@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const id: string | null = searchParams.get("id");
-
+    if (!id) throw new Error("Missing required fields. Required: id");
     const student = await getStudentData(id);
 
     return NextResponse.json({ student }, { status: 200 });
