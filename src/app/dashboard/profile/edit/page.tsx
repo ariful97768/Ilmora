@@ -8,12 +8,13 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { ApiResponse, StudentProfile } from "@/lib/types";
 import { updateProfile } from "@/lib/backend-actions/form-actions";
+import { useRouter } from "next/navigation";
 
 export default function EditProfile() {
   const session = useSession();
   const [data, setData] = useState<StudentProfile>();
   const [isLoading, setIsLoading] = useState(false);
-
+  const router = useRouter()
   useEffect(() => {
     if (session.status === "loading") return;
     if (session.status === "unauthenticated") {
@@ -58,12 +59,13 @@ export default function EditProfile() {
     setIsLoading(true);
     try {
       await updateProfile(session.data?.user.id as string, formData);
-     await session.update({
+      await session.update({
         ...session.data,
         user: {
           name,
         },
       });
+      router.refresh();
       Swal.fire({ text: "Your profile updated successfully", icon: "success" });
     } catch (error) {
       const message =
