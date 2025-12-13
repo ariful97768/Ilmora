@@ -5,15 +5,24 @@ import Image from "next/image";
 import Follow from "./follow-button";
 import Link from "next/link";
 import Post from "@/components/post";
-import bgImg from "@/assets/backgroung-akademi.jpg";
+import bgImg from "@/assets/backgroung-faculty.jpg";
+import { getFacultyById } from "@/lib/backend-actions/get-faculty";
+import { redirect } from "next/navigation";
 export default async function TeacherDetails({
   params,
 }: {
   params: Promise<{ teacherId: string }>;
 }) {
   const session: Session | null = await auth();
-  const userId: string = (await params).teacherId;
-  const txt = `A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence was created for the bliss of souls like mine.I am so happy, my dear friend, so absorbed in the exquisite sense of mere tranquil existence, that I neglect my talents. \nA collection of textile samples lay spread out on the table - Mitchel was a traveling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame.`;
+  const id: string = (await params).teacherId;
+  const faculty = await getFacultyById({ id });
+
+  // fetch returns null if user is not authenticated
+  if (!faculty) {
+    redirect("/login");
+  }
+
+  const txt = faculty.about;
   const skills: string[] = ["Mathematics", "Science", "Art"];
   const languages: string[] = ["English", "Bangla", "French"];
   return (
@@ -37,11 +46,11 @@ export default async function TeacherDetails({
               <h3 className="text-xl font-bold">
                 {session?.user?.name + " " + userId}
               </h3>
-              <p className="text-sm">Teacher</p>
+              <p className="text-sm">{faculty.department}</p>
             </div>
             <div>
-              <h3 className="text-medium">{session?.user?.email}</h3>
-              <p className="text-sm">Admin</p>
+              <h3 className="text-medium">{faculty.phone}</h3>
+              <p className="text-sm">{faculty.phone}</p>
             </div>
           </div>
         </div>
@@ -52,11 +61,14 @@ export default async function TeacherDetails({
           <div className="space-y-2 mb-9">
             <h3 className="text-lg font-semibold">About me</h3>
             <div className="whitespace-pre-line space-y-2">
-              {txt.split("\n").map((item, idx) => (
-                <p className="text-sm" key={idx}>
-                  {item}
-                </p>
-              ))}
+              {txt.split("\n").map(
+                (item, idx) =>
+                  item && (
+                    <p className="text-sm" key={idx}>
+                      {item}
+                    </p>
+                  )
+              )}
             </div>
           </div>
           <div className="space-y-2 mb-7">
@@ -121,16 +133,19 @@ export default async function TeacherDetails({
             <ul className="pl-5">
               <li className="list-disc">
                 <p className="font-semibold text-sm">
-                  History Major, Oxford University
+                  {faculty.education.degree}, {faculty.education.university}
                 </p>
-                <span className="text-xs text-gray-800">2013-2017</span>
+                <span className="text-xs text-gray-800">
+                  {new Date(faculty.education.startDate).getFullYear()} -{" "}
+                  {new Date(faculty.education.endDate).getFullYear()}
+                </span>
               </li>
-              <li className="list-disc">
+              {/* <li className="list-disc">
                 <p className="font-semibold text-sm">
                   History Major, Oxford University
                 </p>
                 <span className="text-xs text-gray-800">2013-2017</span>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
@@ -155,7 +170,7 @@ export default async function TeacherDetails({
             </div>
             <div className="flex justify-center items-center gap-3">
               <Follow />
-              <Link href={`?message=true&to=${userId}`}>
+              <Link href={`/dashboard/chat/${faculty?._id.toString()}`}>
                 <Button className="bg-indigo-600 text-white hover:bg-indigo-500 hover:cursor-pointer">
                   Send Message
                 </Button>
