@@ -16,6 +16,12 @@ export default async function createUser(
       message: "Password is required but, missing here",
     };
   }
+  if (data.role !== "faculty" && data.role !== "student") {
+    return {
+      success: false,
+      message: "Only Student and Facluty signin is allowed",
+    };
+  }
   // get database connection
   const db = await getDb();
 

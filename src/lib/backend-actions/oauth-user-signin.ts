@@ -17,6 +17,13 @@ export async function oAuthSignin({
     return { success: false, message: "Email is required but missing here" };
   }
 
+  if (role !== "faculty" && role !== "student") {
+    return {
+      success: false,
+      message: "Only Student and Facluty signin is allowed",
+    };
+  }
+
   try {
     const { users } = await getDb();
 
