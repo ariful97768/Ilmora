@@ -6,36 +6,36 @@ export interface ApiResponse<T> {
 }
 
 /* ==== User types ==== */
+type AuthProvider = "google" | "facebook" | "github" | "credentials";
+type UserStatus = "pending" | "active" | "inactive";
+type UserRole = "student" | "faculty" | "admin";
+
 export interface BaseUser {
-  name: string;
   email: string;
-  provider: "google" | "facebook" | "credentials";
-  image: string | null;
-  role: "user" | "student" | "faculty" | "admin";
-  isActive: boolean;
+  provider: AuthProvider;
+  role: UserRole;
+  status: UserStatus;
 }
 
-export type CreateUserInput =
-  | (Omit<BaseUser, "isActive" | "provider"> & {
-      provider: "google" | "facebook";
-    })
-  | (Omit<BaseUser, "isActive" | "provider"> & {
-      provider: "credentials";
-      password: string;
-    });
+type SocialProvider = { provider: Exclude<AuthProvider, "credentials"> };
+type CredentialsProvider = { provider: "credentials"; password: string };
 
-export type InsertUserOnDB = CreateUserInput & {
+export type NewUserInput = Omit<BaseUser, "status" | "role"> & {
+  role: Exclude<UserRole, "admin">;
+} & (SocialProvider | CredentialsProvider);
+
+export type InsertUserOnDB = NewUserInput & {
   createdAt: string;
   updatedAt: string;
-  isActive: boolean;
+  status: UserStatus;
 };
 
-export type UserFromDB = Omit<InsertUserOnDB, "password"> & {
+export type UserFromDB = Omit<InsertUserOnDB, "password" | "role"> & {
   id: string;
+  role: UserRole;
 };
 
 /* ==== Students types ==== */
-
 export interface BaseStudent {
   userId: string;
   rollNumber: string;
