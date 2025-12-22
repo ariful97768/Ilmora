@@ -27,23 +27,27 @@ if (!(global as any)._mongoClientPromise) {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const clientPromise: Promise<MongoClient> = (global as any)._mongoClientPromise;
 
-export const database = (async () => {
+const database = (async () => {
   const c = await clientPromise;
   return c.db("Ilmora");
 })();
 
-const db = {
-  users: (await database).collection<User>("Users"),
-  students: (await database).collection<Student>("Students"),
-  faculties: (await database).collection<Faculty>("Faculties"),
-  admins: (await database).collection("Admins"),
-  enrollments: (await database).collection("Enrollments"),
-  courses: (await database).collection("Courses"),
-  departments: (await database).collection<Department>("Departments"),
-  assignments: (await database).collection("Assignments"),
-};
+async function getDb() {
+  const db = await database;
+  const collection = {
+    users: db.collection<User>("Users"),
+    admins: db.collection("Admins"),
+    students: db.collection<Student>("Students"),
+    faculties: db.collection<Faculty>("Faculties"),
+    departments: db.collection<Department>("Departments"),
+    enrollments: db.collection("Enrollments"),
+    courses: db.collection("Courses"),
+    assignments: db.collection("Assignments"),
+  };
+  return collection;
+}
 
-export default db;
+export default getDb;
 
 // types for database collection
 type Student = InsertStudentOnDB & {

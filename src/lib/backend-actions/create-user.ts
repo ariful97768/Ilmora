@@ -1,43 +1,53 @@
-import db from "@/database/mongodb";
-import { CreateUserInput, InsertUserOnDB, UserResponse } from "../types";
-
-export default async function createUser(data: CreateUserInput): Promise<UserResponse> {
-  if (!data.name || !data.email) {
-    throw new Error(
-      "Missing required fields. Required: name, email, password."
-    );
+import { NewUserInput, InsertUserOnDB, UserFromDB } from "../types";
+import getDb from "@/database/mongodb";
+import bcrypt from "bcryptjs";
+export default async function createUser(
+  data: NewUserInput
+): Promise<
+  { success: true; user: UserFromDB } | { success: false; message: string }
+> {
+  // check for required fields such as email and password
+  if (!data.email) {
+    return { success: false, message: "Email is required but, missing here" };
   }
   if (data.provider === "credentials" && !data.password) {
-    throw new Error("Password is missing for credentials sign in.");
+    return {
+      success: false,
+      message: "Password is required but, missing here",
+    };
   }
+  // get database connection
+  const db = await getDb();
 
+  // Check if user already exists
   const isExist = await db.users.findOne({ email: data.email });
 
   if (isExist) {
-    throw new Error("User already exits.");
+    return { success: false, message: "User already exists" };
   }
 
   let user: InsertUserOnDB;
+
   if (data.provider === "credentials") {
+    // Hash password using bcrypt
+    const rawPassword = data.password;
+    const hashedPassword = await bcrypt.hash(rawPassword, 10);
     user = {
-      name: data.name,
       email: data.email,
-      image: data.image || null,
-      role: "user",
+      password: hashedPassword,
+      role: data.role,
       provider: data.provider,
-      password: data.password,
-      isActive: true,
+      status: "pending",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
   } else {
+    // If data.provider isn't "credentials" then we don't store password
     user = {
-      name: data.name,
       email: data.email,
-      image: data.image || null,
-      role: "user",
+      role: data.role,
       provider: data.provider,
-      isActive: true,
+      status: "pending",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
@@ -45,22 +55,21 @@ export default async function createUser(data: CreateUserInput): Promise<UserRes
 
   const result = await db.users.insertOne(user);
 
+  // Send user data with success message if inserted successfully
   if (result.acknowledged) {
     return {
       success: true,
-      message: "User created successfully",
-      data: {
+      user: {
         id: result.insertedId.toString(),
-        name: user.name,
         email: user.email,
         role: user.role,
-        image: user.image,
         provider: user.provider,
-        isActive: user.isActive,
+        status: user.status,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
       },
     };
   }
-  throw new Error("Failed to create user.");
+  // In case if user creation fails
+  return { success: false, message: "Failed to create user" };
 }
