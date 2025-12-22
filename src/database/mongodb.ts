@@ -35,6 +35,7 @@ const database = (async () => {
 async function getDb() {
   const db = await database;
   const collection = {
+    users: db.collection<User>("Users"),
     admins: db.collection("Admins"),
     students: db.collection<Student>("Students"),
     faculties: db.collection<Faculty>("Faculties"),
