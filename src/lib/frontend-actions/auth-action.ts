@@ -25,12 +25,21 @@ type SigninCredentialsProps = {
   method: "credentials";
   formData: CredentialsFormData;
 };
-type OAuthProps = {
-  action: "register" | "signin";
+type OAuthRegister = {
+  action: "register";
   method: "google" | "facebook" | "github";
   formData: { signinAs: UserRole };
 };
-type AuthProps = RegisterCredentialsProps | SigninCredentialsProps | OAuthProps;
+type OAuthSignin = {
+  action: "signin";
+  method: "google" | "facebook" | "github";
+  formData: { signinAs: undefined };
+};
+type AuthProps =
+  | RegisterCredentialsProps
+  | SigninCredentialsProps
+  | OAuthRegister
+  | OAuthSignin;
 
 export async function authenticate({
   method,
@@ -39,7 +48,7 @@ export async function authenticate({
 }: AuthProps): Promise<AuthState> {
   // Get the Role from the form data
 
-  const role = action === "register" ? formData.signinAs : undefined;
+  const role = action === "register" && formData.signinAs;
   if (action === "register" && !role)
     return {
       error: "Role is required",
