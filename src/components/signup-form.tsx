@@ -52,15 +52,14 @@ export function SignupForm({
       action: "register",
     });
     if (res.success) reset();
-    console.log(res);
+    // console.log(res);
     if (!res.success) toast.error(res.error);
   };
 
-  // Add faculty as an admin, send the verification email. Design the auth flow for this.
 
-  const session = useSession();
+  // const session = useSession();
 
-  console.log(session);
+  // console.log(session);
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
