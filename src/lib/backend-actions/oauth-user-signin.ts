@@ -17,18 +17,12 @@ export async function oAuthSignin({
     return { success: false, message: "Email is required but missing here" };
   }
 
-  if (role !== "faculty" && role !== "student") {
-    return {
-      success: false,
-      message: "Only Student and Facluty signin is allowed",
-    };
-  }
-
   try {
     const { users } = await getDb();
 
     const existingUser = await users.findOne({ email });
     // console.log(existingUser);
+    // console.log("oauth login called");
 
     // If user is already created return the user data
     if (existingUser) {
@@ -45,7 +39,16 @@ export async function oAuthSignin({
         },
       };
     }
+    // console.log("oauth register called");
 
+    // If user does not exist then we proceed to create a new user
+    // But before that we must verify that only faculty or student is sent as role
+    if (role !== "faculty" && role !== "student") {
+      return {
+        success: false,
+        message: "Only Student and Faculty signin is allowed",
+      };
+    }
     // Create user object before inserting to database
     const userData: InsertUserOnDB = {
       email,

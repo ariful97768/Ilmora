@@ -10,22 +10,27 @@ type AuthState = {
   success?: boolean;
 };
 
-type AuthProps = {
+type UserRole = "student" | "faculty";
+type CredentialsFormData = {
+  email: string;
+  password: string;
+};
+type RegisterCredentialsProps = {
+  action: "register";
+  method: "credentials";
+  formData: CredentialsFormData & { signinAs: UserRole };
+};
+type SigninCredentialsProps = {
+  action: "signin";
+  method: "credentials";
+  formData: CredentialsFormData;
+};
+type OAuthProps = {
   action: "register" | "signin";
-} & (
-  | {
-      method: "credentials";
-      formData: {
-        email: string;
-        password: string;
-        signinAs: "student" | "faculty";
-      };
-    }
-  | {
-      method: "google" | "facebook" | "github";
-      formData: { signinAs: "student" | "faculty" };
-    }
-);
+  method: "google" | "facebook" | "github";
+  formData: { signinAs: UserRole };
+};
+type AuthProps = RegisterCredentialsProps | SigninCredentialsProps | OAuthProps;
 
 export async function authenticate({
   method,
@@ -34,8 +39,8 @@ export async function authenticate({
 }: AuthProps): Promise<AuthState> {
   // Get the Role from the form data
 
-  const role = formData.signinAs;
-  if (!role)
+  const role = action === "register" ? formData.signinAs : undefined;
+  if (action === "register" && !role)
     return {
       error: "Role is required",
       success: false,
@@ -68,9 +73,13 @@ export async function authenticate({
     if (method === "google" || method === "facebook" || method === "github") {
       // we can't send additional props to OAuth signin method. But as must have to pass the signinAs props, we store it in the cookies.
       // And then the next step is to access the cookie on the signin callback
-      (await cookies()).set("signinAs", role, {
-        expires: new Date(Date.now() + 5 * 60 * 1000),
-      });
+      // The cookie is needed only when registering, and must be stored before the signin call
+      if (action === "register" && role) {
+        (await cookies()).set("signinAs", role, {
+          expires: new Date(Date.now() + 5 * 60 * 1000),
+        });
+      }
+
       await signIn(method, { redirectTo: "/dashboard/profile" });
     }
 
