@@ -10,15 +10,20 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { endOfDay, isAfter, isBefore, startOfDay } from "date-fns";
 
 export function Calendar22({
   error,
   value,
   onChange,
+  dateBefore,
+  dateAfter,
 }: {
   error: string | undefined;
   value: Date | undefined;
   onChange: React.Dispatch<React.SetStateAction<Date | undefined>>;
+  dateBefore?: Date;
+  dateAfter?: Date;
 }) {
   const [open, setOpen] = React.useState(false);
 
@@ -40,6 +45,15 @@ export function Calendar22({
           <Calendar
             mode="single"
             selected={value}
+            disabled={(date) => {
+              if (dateBefore && isBefore(date, startOfDay(dateBefore))) {
+                return true;
+              }
+              if (dateAfter && isAfter(date, endOfDay(dateAfter))) {
+                return true;
+              }
+              return false;
+            }}
             captionLayout="dropdown"
             onSelect={(date) => {
               onChange(date);
