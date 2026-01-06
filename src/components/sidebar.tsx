@@ -51,7 +51,7 @@ const Sidebar = ({ session }: { session: Session }) => {
             <span className={`${fullWidth ? "block" : "hidden"}`}>Profile</span>
           </Link>
           {/* User routes */}
-          {session?.user.role === "student" && (
+          {session?.user.role === "Student" && (
             <>
               <Link
                 className="flex gap-2 items-center text-gray-100"

@@ -33,7 +33,7 @@ export function LoginForm({
     defaultValues: {
       email: "",
       password: "",
-      signinAs: "student",
+      signinAs: "Student",
     },
   });
 

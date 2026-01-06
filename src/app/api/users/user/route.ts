@@ -1,6 +1,6 @@
 import createUser from "@/lib/backend-actions/create-user";
 import verifySignin from "@/lib/backend-actions/verify-signin";
-import { CreateUserInput } from "@/lib/types";
+import { NewUserInput } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -43,7 +43,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    let data: CreateUserInput;
+    let data: NewUserInput;
     try {
       data = await req.json();
     } catch (err) {

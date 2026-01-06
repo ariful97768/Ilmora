@@ -27,8 +27,8 @@ export function SignupForm({
   ...props
 }: React.ComponentProps<"div">) {
   const [showPass, setShowPass] = useState(false);
-  const [activeRole, setActiveRole] = useState<"student" | "faculty">(
-    "student"
+  const [activeRole, setActiveRole] = useState<"Student" | "Faculty">(
+    "Student"
   );
   const {
     register,
@@ -39,7 +39,7 @@ export function SignupForm({
     defaultValues: {
       email: "",
       password: "",
-      signinAs: "student",
+      signinAs: "Student",
     },
   });
 
@@ -70,22 +70,22 @@ export function SignupForm({
             </div>
             {/* Role Switcher Tabs */}
             <Tabs
-              defaultValue="student"
+              defaultValue="Student"
               value={activeRole}
               onValueChange={(val) =>
-                setActiveRole(val as "student" | "faculty")
+                setActiveRole(val as "Student" | "Faculty")
               }
               className="w-full"
             >
               <TabsList className="grid w-full grid-cols-2 h-10">
                 <TabsTrigger
-                  value="student"
+                  value="Student"
                   className="flex gap-2 items-center"
                 >
                   <GraduationCap className="h-4 w-4" /> Student
                 </TabsTrigger>
                 <TabsTrigger
-                  value="faculty"
+                  value="Faculty"
                   className="flex gap-2 items-center"
                 >
                   <School className="h-4 w-4" /> Faculty

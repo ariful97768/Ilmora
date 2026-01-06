@@ -10,7 +10,7 @@ type AuthState = {
   success?: boolean;
 };
 
-type UserRole = "student" | "faculty";
+type UserRole = "Student" | "Faculty";
 type CredentialsFormData = {
   email: string;
   password: string;
@@ -74,7 +74,7 @@ export async function authenticate({
         action: action,
         signinAs: role,
         redirect: true,
-        redirectTo: "/dashboard/profile",
+        redirectTo: "/complete-profile",
       });
     }
 

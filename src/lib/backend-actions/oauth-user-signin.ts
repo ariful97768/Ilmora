@@ -9,7 +9,7 @@ export async function oAuthSignin({
 }: {
   email: string;
   provider: "google" | "facebook" | "github";
-  role: "student" | "faculty";
+  role: "Student" | "Faculty";
 }): Promise<
   { success: true; user: UserFromDB } | { success: false; message: string }
 > {
@@ -43,7 +43,7 @@ export async function oAuthSignin({
 
     // If user does not exist then we proceed to create a new user
     // But before that we must verify that only faculty or student is sent as role
-    if (role !== "faculty" && role !== "student") {
+    if (role !== "Faculty" && role !== "Student") {
       return {
         success: false,
         message: "Only Student and Faculty signin is allowed",
@@ -54,7 +54,7 @@ export async function oAuthSignin({
       email,
       provider,
       role,
-      status: "pending" as "pending" | "active" | "inactive",
+      status: "Pending" as "Pending" | "Active" | "Inactive",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };

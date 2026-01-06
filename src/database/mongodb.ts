@@ -1,6 +1,6 @@
 import {
   Department,
-  Faculty,
+  InsertFacultyOnDB,
   InsertStudentOnDB,
   InsertUserOnDB,
 } from "@/lib/types";
@@ -38,7 +38,7 @@ async function getDb() {
     users: db.collection<User>("Users"),
     admins: db.collection("Admins"),
     students: db.collection<Student>("Students"),
-    faculties: db.collection<Faculty>("Faculties"),
+    faculties: db.collection<InsertFacultyOnDB>("Faculties"),
     departments: db.collection<Department>("Departments"),
     enrollments: db.collection("Enrollments"),
     courses: db.collection("Courses"),
