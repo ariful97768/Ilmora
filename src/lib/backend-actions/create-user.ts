@@ -16,10 +16,10 @@ export default async function createUser(
       message: "Password is required but, missing here",
     };
   }
-  if (data.role !== "faculty" && data.role !== "student") {
+  if (data.role !== "Faculty" && data.role !== "Student") {
     return {
       success: false,
-      message: "Only Student and Facluty signin is allowed",
+      message: "Only Student and Faculty signin is allowed",
     };
   }
   // get database connection
@@ -43,7 +43,7 @@ export default async function createUser(
       password: hashedPassword,
       role: data.role,
       provider: data.provider,
-      status: "pending",
+      status: "Pending",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
@@ -53,7 +53,7 @@ export default async function createUser(
       email: data.email,
       role: data.role,
       provider: data.provider,
-      status: "pending",
+      status: "Pending",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
