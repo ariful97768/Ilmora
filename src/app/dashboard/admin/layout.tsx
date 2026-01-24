@@ -7,7 +7,7 @@ export default async function AdminRoutes({
   children: ReactNode;
 }) {
   const session = await auth();
-  if (session?.user.role !== "admin") throw new Error("You are not authorized to access this page");
+  if (session?.user.role !== "Admin") throw new Error("You are not authorized to access this page");
 
   return children;
 }
