@@ -170,9 +170,13 @@ export function LoginForm({
                 </Button>
                 {/* Github */}
                 <Button
-                  onClick={() =>
-                    toast.info("Github method is not implemented yet")
-                  }
+                  onClick={async () => {
+                    await authenticate({
+                      method: "github",
+                      action: "signin",
+                      formData: { signinAs: undefined },
+                    });
+                  }}
                   variant="outline"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

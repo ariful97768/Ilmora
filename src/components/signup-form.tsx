@@ -17,7 +17,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import { Eye, EyeOff, GraduationCap, School } from "lucide-react";
 import { useState } from "react";
 import { authenticate } from "@/lib/frontend-actions/auth-action";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -193,9 +193,13 @@ export function SignupForm({
                 <span className="sr-only">Sign up with Facebook</span>
               </Button>
               <Button
-                onClick={() =>
-                  toast.info("Github method is not implemented yet")
-                }
+                onClick={async () => {
+                  await authenticate({
+                    method: "github",
+                    action: "register",
+                    formData: { signinAs: activeRole },
+                  });
+                }}
                 variant="outline"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
