@@ -74,6 +74,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const result = await verifySignin({
             email: credentials.email as string,
             password: credentials.password as string,
+            provider: "credentials",
           });
 
           if (!result.success) throw new Error(result.message);
