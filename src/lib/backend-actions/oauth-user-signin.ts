@@ -24,8 +24,16 @@ export async function oAuthSignin({
     // console.log(existingUser);
     // console.log("oauth login called");
 
-    // If user is already created return the user data
+    // If user is already created then return the user data
     if (existingUser) {
+      // Different provider response
+      if (existingUser.provider !== provider) {
+        return {
+          success: false,
+          message: "Email is already used with another account",
+        };
+      }
+
       return {
         success: true,
         user: {

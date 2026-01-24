@@ -29,7 +29,7 @@ export default async function createUser(
   const isExist = await db.users.findOne({ email: data.email });
 
   if (isExist) {
-    return { success: false, message: "User already exists" };
+    return { success: false, message: "Email is already used with another account" };
   }
 
   let user: InsertUserOnDB;
