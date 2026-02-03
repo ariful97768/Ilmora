@@ -16,6 +16,12 @@ export default async function createUser(
       message: "Password is required but, missing here",
     };
   }
+  if (data.role !== "Faculty" && data.role !== "Student") {
+    return {
+      success: false,
+      message: "Only Student and Faculty signin is allowed",
+    };
+  }
   // get database connection
   const db = await getDb();
 
@@ -23,7 +29,7 @@ export default async function createUser(
   const isExist = await db.users.findOne({ email: data.email });
 
   if (isExist) {
-    return { success: false, message: "User already exists" };
+    return { success: false, message: "Email is already used with another account" };
   }
 
   let user: InsertUserOnDB;
@@ -37,7 +43,7 @@ export default async function createUser(
       password: hashedPassword,
       role: data.role,
       provider: data.provider,
-      status: "pending",
+      status: "Pending",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
@@ -47,7 +53,7 @@ export default async function createUser(
       email: data.email,
       role: data.role,
       provider: data.provider,
-      status: "pending",
+      status: "Pending",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };

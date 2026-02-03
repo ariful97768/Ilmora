@@ -1,27 +1,28 @@
 "use client";
 import Image from "next/image";
 import noImageAvatar from "@/assets/no-img-avatar.png";
-import { Dispatch, RefObject, SetStateAction } from "react";
+import { useRef } from "react";
 
 export default function ProfileImage({
-  imgRef,
-  image,
-  setImage,
+  errors,
+  onChange,
+  value,
 }: {
-  imgRef: RefObject<HTMLInputElement | null>;
-  image: string | null;
-  setImage: Dispatch<SetStateAction<string | null>>;
+  errors: string | undefined;
+  onChange: (value: File | null) => void;
+  value: File | null;
 }) {
+  const imgRef = useRef<HTMLInputElement>(null);
   return (
     <div className="space-y-2">
       <div
         id="image"
         className="bg-[#F6F9FF] flex flex-col items-center justify-center gap-2 rounded-md w-20 h-20"
       >
-        {image ? (
+        {value ? (
           <Image
             className="object-cover shrink-0 rounded-md overflow-hidden w-full h-full"
-            src={image}
+            src={URL.createObjectURL(value)}
             width={80}
             height={80}
             alt="profile"
@@ -33,13 +34,15 @@ export default function ProfileImage({
                 src={noImageAvatar}
                 width={80}
                 height={80}
-                alt="Upload image"  
+                className={`${
+                  errors && "rounded-md border-destructive border"
+                } `}
+                alt="Upload image"
               />
             </div>
             <input
               onChange={(e) =>
-                e?.target?.files?.[0] &&
-                setImage(URL.createObjectURL(e?.target?.files?.[0]))
+                e?.target?.files?.[0] && onChange(e?.target?.files?.[0])
               }
               hidden
               accept="image/jpeg, image/png"
@@ -58,7 +61,7 @@ export default function ProfileImage({
           Choose image
         </button>
         <button
-          onClick={() => setImage(null)}
+          onClick={() => onChange(null)}
           type="button"
           className="px-3 py-2 rounded-md bg-red-200 text-red-500 hover:bg-red-500 hover:text-white duration-300 text-xs font-semibold"
         >

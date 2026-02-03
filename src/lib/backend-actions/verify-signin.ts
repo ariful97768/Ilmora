@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 export default async function verifySignin(credentials: {
   email: string;
   password?: string;
+  provider: "credentials" | "google" | "github" | "facebook";
 }): Promise<
   { success: true; user: UserFromDB } | { success: false; message: string }
 > {
@@ -18,6 +19,14 @@ export default async function verifySignin(credentials: {
   // No user exists response
   if (!userExist) return { success: false, message: "User does not exist" };
 
+  // Different provider response
+  if (userExist.provider !== credentials.provider) {
+    return {
+      success: false,
+      message: "Email is already used with another account",
+    };
+  }
+
   // No password provided response
   if (userExist.provider === "credentials" && !credentials.password) {
     return { success: false, message: "Password is required for verification" };
@@ -27,7 +36,7 @@ export default async function verifySignin(credentials: {
   if (userExist.provider === "credentials" && credentials.password) {
     const isPasswordMatched = await bcrypt.compare(
       credentials.password,
-      userExist.password
+      userExist.password,
     );
     if (!isPasswordMatched)
       return { success: false, message: "Wrong password" };
