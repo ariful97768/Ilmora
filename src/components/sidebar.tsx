@@ -112,6 +112,75 @@ const Sidebar = ({ session }: { session: Session }) => {
             <span className={`${fullWidth ? "block" : "hidden"}`}>Chat</span>
           </Link>
         </div>
+
+        <div className="mt-5">
+          <h2 className="text-center bg-teal-800 mb-5 text-white">
+            Admin Routes
+          </h2>
+          <div className="border-4 space-y-3 border-red-400">
+            <Link
+              className="flex gap-2 items-center text-gray-100"
+              href="/dashboard/admin/all-users"
+            >
+              <FaUser size={fullWidth ? 18 : 24} />{" "}
+              <span className={`${fullWidth ? "block" : "hidden"}`}>
+                all-users
+              </span>
+            </Link>
+            <Link
+              className="flex gap-2 items-center text-gray-100"
+              href="/dashboard/admin/add-faculty"
+            >
+              <FaUser size={fullWidth ? 18 : 24} />{" "}
+              <span className={`${fullWidth ? "block" : "hidden"}`}>
+                add-faculty
+              </span>
+            </Link>
+            <Link
+              className="flex gap-2 items-center text-gray-100"
+              href={"/dashboard/admin/add-student"}
+            >
+              <FaUser size={fullWidth ? 18 : 24} />{" "}
+              <span className={`${fullWidth ? "block" : "hidden"}`}>
+                add-student
+              </span>
+            </Link>
+            <Link
+              className="flex gap-2 items-center text-gray-100"
+              href={"/dashboard/admin/manage-users"}
+            >
+              <FaUser size={fullWidth ? 18 : 24} />{" "}
+              <span className={`${fullWidth ? "block" : "hidden"}`}>
+                manage-users
+              </span>
+            </Link>
+            <Link
+              className="flex gap-2 items-center text-gray-100"
+              href={"/dashboard/teachers"}
+            >
+              <FaUser size={fullWidth ? 18 : 24} />{" "}
+              <span className={`${fullWidth ? "block" : "hidden"}`}>
+                teachers
+              </span>
+            </Link>
+            <Link
+              className="flex gap-2 items-center text-gray-100"
+              href={"/dashboard/teachers/68f0a3b4c873d17d368a6314"}
+            >
+              <FaUser size={fullWidth ? 18 : 24} />{" "}
+              <span className={`${fullWidth ? "block" : "hidden"}`}>
+                teacher profile
+              </span>
+            </Link>
+            <Link
+              className="flex gap-2 items-center text-gray-100"
+              href={"/dashboard/chat"}
+            >
+              <FaUser size={fullWidth ? 18 : 24} />{" "}
+              <span className={`${fullWidth ? "block" : "hidden"}`}>chat</span>
+            </Link>
+          </div>
+        </div>
       </div>
     </aside>
   );

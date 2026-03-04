@@ -36,7 +36,7 @@ async function getDb() {
   const db = await database;
   const collection = {
     users: db.collection<User>("Users"),
-    admins: db.collection("Admins"),
+    admins: db.collection<Admin>("Admins"),
     students: db.collection<Student>("Students"),
     faculties: db.collection<InsertFacultyOnDB>("Faculties"),
     departments: db.collection<Department>("Departments"),
@@ -56,4 +56,9 @@ type Student = InsertStudentOnDB & {
 
 type User = InsertUserOnDB & {
   readonly _id?: ObjectId;
+};
+
+type Admin = Omit<InsertUserOnDB, "role"> & {
+  readonly _id?: ObjectId;
+  role: "Admin";
 };

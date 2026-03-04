@@ -8,12 +8,16 @@ import { useRouter } from "next/navigation";
 export default function CompleteProfile() {
   const session = useSession();
   const router = useRouter();
-
-  if (session.status === "unauthenticated") return router.push("/login");
+  console.log(session.data, session.status);
   if (session.status === "loading") {
     return <LoadingUi />;
   }
-  if (!session || !session?.data?.user.email || !session?.data?.user.id) {
+  if (
+    !session ||
+    session.status === "unauthenticated" ||
+    !session?.data?.user.email ||
+    !session?.data?.user.id
+  ) {
     return router.push("/login");
   }
   if (session?.data?.user.status === "Active") {

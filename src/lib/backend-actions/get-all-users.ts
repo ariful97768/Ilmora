@@ -1,23 +1,24 @@
-import db from "@/database/mongodb";
-
+import getDb from "@/database/mongodb";
 export default async function getAllUsers({
   usersType,
   email,
 }: {
-  usersType?: "user" | "student" | "faculty" | "admin";
+  usersType?: "Student" | "Faculty";
   email: string;
 }) {
   if (!email) throw new Error("Requested user's email is not provided");
-
-  const isAdmin = await db.users.findOne({
+  // Retrieve all user if admin is valid and user role is provided. 
+  const db = await getDb();
+  const isAdmin = await db.admins.findOne({
     email,
-    role: "admin",
+    role: "Admin",
     isActive: true,
   });
   if (!isAdmin) throw new Error("User does not have access to this resources");
-
+  
+  // Add pagination rate limiting 
   const result = await db.users
-    .find({ role: usersType ? usersType : { $exists: true } }) 
+    .find({ role: usersType ? usersType : { $exists: true } })
     .toArray();
   return result;
 }
