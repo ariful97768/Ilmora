@@ -36,7 +36,7 @@ export default async function TeacherDetails({
             className="rounded-full absolute -bottom-10 left-7 z-10"
             width={100}
             height={100}
-            src={session?.user?.image ?? "/default-profile.png"}
+            src={session?.user?.image ?? "default-profile.png"}
             alt="Profile"
           />
         </div>
@@ -44,7 +44,7 @@ export default async function TeacherDetails({
           <div className="flex gap-10">
             <div>
               <h3 className="text-xl font-bold">
-                {session?.user?.name + " " + userId}
+                {session?.user?.name + " faculty name"}
               </h3>
               <p className="text-sm">{faculty.department}</p>
             </div>
@@ -62,7 +62,7 @@ export default async function TeacherDetails({
             <h3 className="text-lg font-semibold">About me</h3>
             <div className="whitespace-pre-line space-y-2">
               {txt.split("\n").map(
-                (item, idx) =>
+                (item: string, idx: number) =>
                   item && (
                     <p className="text-sm" key={idx}>
                       {item}

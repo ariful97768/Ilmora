@@ -104,6 +104,23 @@ export type UserResponse = ApiResponse<UserFromDB>;
 export type StudentResponse = ApiResponse<StudentFromDB>;
 export type FacultyResponse = ApiResponse<FacultyFromDB>;
 
+/* === Department types === */
+export interface Department {
+  name: DepartmentTypes;
+  code: "CSE" | "MATH" | "HIST";
+  description: string;
+  establishedYear: number;
+  headOfDepartment: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// BaseType
+// NewType
+// InsertType
+// FromDBType
+
 /* === Faculty types === */
 export interface BaseFaculty {
   userId: string;
