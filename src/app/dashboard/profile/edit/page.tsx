@@ -6,13 +6,13 @@ import UpdateImage from "./image";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { ApiResponse, StudentProfile } from "@/lib/types";
+import { ApiResponse, StudentFromDB } from "@/lib/types";
 import { updateProfile } from "@/lib/backend-actions/form-actions";
 import { useRouter } from "next/navigation";
 
 export default function EditProfile() {
   const session = useSession();
-  const [data, setData] = useState<StudentProfile>();
+  const [data, setData] = useState<StudentFromDB>();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter()
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function EditProfile() {
             "Failed to fill inputs. No worries, you can still update your profile."
           );
 
-        const studentData: ApiResponse<StudentProfile> =
+        const studentData: ApiResponse<StudentFromDB> =
           await studentRes.json();
 
         setData(studentData.data);

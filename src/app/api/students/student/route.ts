@@ -1,7 +1,7 @@
 import db from "@/database/mongodb";
 import { createStudent } from "@/lib/backend-actions/create-student";
 import { getStudentData } from "@/lib/backend-actions/get-student-data";
-import { StudentInput } from "@/lib/types";
+import { NewStudentInput } from "@/lib/types";
 import { ObjectId } from "mongodb";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
     const isAdmin = await db.users.findOne({
       email: reqUserEmail,
       isActive: true,
-      role: "admin",
+      role: "Admin",
     });
 
     if (!isAdmin) {
@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
     }
 
     // insert data
-    let data: StudentInput;
+    let data: NewStudentInput;
     try {
       data = await req.json();
     } catch (err: unknown) {
@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
     const student = await createStudent(data);
     await db.users.updateOne(
       { _id: new ObjectId(data.userId) },
-      { $set: { role: "student" } }
+      { $set: { role: "Student" } }
     );
     return NextResponse.json(
       {
